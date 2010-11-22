@@ -1,0 +1,25 @@
+#summary One-sentence summary of this page.
+#labels Featured
+
+= Introduction =
+
+Created project to store utility classes, classes that are used constantly by java developers from Brazil or other countries.
+The idea of this project is to centralize functionality that may be useful for many people, this project is free and is accepting contributions from various types of functionality
+
+= Details =
+
+Among the features created they are:
+<ul>
+<li>Abbreviation Name and Last Name</li>
+<li>Compression and decompression (Zip, UnZip )</li>
+<li>Easy access to FTP connection to Apache Commons Net</li>
+<li>Get a unique way the types of parks to street addresses.</li>
+<li>Encryption utility for MD5 and SHA1</li>
+<li>LeftPad, RighPad, Capitalize Strings</li>
+<li>Reflection features.</li>
+<li>Remove Accent orthographically.</li>
+<li>Utility with the formation of Date, Calendar</li>
+<li>Utility for money for extended service</li>
+<li>Validation of CPF and CNPJ</li>
+<li>Validation of XML from an XSD Schema</li>
+</ul>
