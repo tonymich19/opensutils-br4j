@@ -1,0 +1,40 @@
+#summary Class XMLUtils do OpenSutils-Br4J
+#labels XML,XMLUtils,Java,Featured,Phase-Implementation,ValidadeSchema,XSD
+
+=XMLUtils=
+
+Está classe abstrata oferece métodos estáticos para manipular arquivos xml
+
+== Detalhes ==
+
+Os métodos disponíveis nesta classe são:
+
+<ul>
+<li>buildXMLWriter(String)</li>
+<li>validateXML(File, String)</li>
+<li>validateXML(InputStream, String)</li>
+<li>validateXML(String, String)</li>
+</ul>
+
+*Informações dos métodos:*
+
+<ul>
+<li>
+===buildXMLWriter===
+_public static XMLWriter buildXMLWriter(String tagElement);_
+
+Este método cria uma instancia de uma classe para facilitar a construção de um arquivo xml
+
+</li>
+<li>
+===validateXML===
+_public static Document validateXML(File xmlFile, String urlSchema );_
+_public static Document validateXML(InputStream inputStream, String urlSchema );_
+_public static Document validateXML(String xmlSource, String urlSchema);_
+
+Este método verifica se um xml está valido, esta seguindo todas as regras, de um XSD Schema, caso não seja valida lança uma exception chamada XMLException,
+se não existir erros retorna um org.w3c.dom.Document
+
+</li>
+
+</ul>
