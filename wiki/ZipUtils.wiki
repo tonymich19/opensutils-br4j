@@ -1,0 +1,52 @@
+#summary Class ZipUtils do OpenSutils-Br4J
+#labels Zip,Un-Zip,Featured,Phase-Implementation,Java,compress,decompresses,Compactar,Comprimir,Descompactar,Utils
+
+=ZipUtils=
+
+Está classe abstrata oferece métodos estáticos para comprimir e descomprimir arquivos no formato zip.
+
+== Detalhes ==
+
+Os métodos disponíveis nesta classe são:
+
+<ul>
+<li>compress(String, String, String)</li>
+<li>compress(String[], String)</li>
+<li>compress(String[], String[], String)</li>
+<li>decompresses(File, File)</li>
+</ul>
+
+*Informações dos métodos:*
+
+<ul>
+<li>
+===compress===
+_public static File compress(String, String, String);_
+_public static File compress(String[], String);_
+_public static File compress(String[], String[], String);_
+
+Este método comprimi os arquivos encontrados e retorna um unico arquivo compactado no formato zip;
+Exemplo:
+{{{
+	String[] arr = {"c:\\felipe.priuli\\arquivoTeste1.txt","c:\\felipe.priuli\\arquivoTeste2.txt"};
+	String[] arrNomes = {"ARQUIVO1.txt","ARQUIVO2.txt"};
+	
+	File file = ZipUtils.compress(arr,arrNomes, "c:\\felipe.priuli\\ARQUIVOS.zip");
+}}}
+
+</li>
+<li>
+===decompresses===
+_public static String decompresses(File, File);_
+
+Este método descompacta todos os arquivos dentro de um arquivo compactado no formato zip e retorna os arquivos 
+descompactados;
+Exemplo:
+{{{
+	File[] files = ZipUtils.decompresses(	new File("c:\\felipe.priuli\\ARQUIVOS.zip"),
+						new File("c:\\felipe.priuli\\ARQUIVOS\\")
+					   );
+}}}
+</li>
+
+</ul>
