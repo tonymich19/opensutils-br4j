@@ -1,0 +1,50 @@
+#summary Class ZipFileCreator do OpenSutils-Br4J
+#labels Zip,Java,Featured,Phase-Implementation,Utils,Compactar,Comprimir,compress
+
+=ZipFileCreator=
+
+Está classe oferece métodos para comprimir arquivos no formato zip.
+
+== Detalhes ==
+
+Os métodos disponíveis nesta classe são:
+
+<ul>
+<li>addFile(FileInputStream, String)</li>
+<li>close()</li>
+<li>compress()</li>
+</ul>
+
+*Informações dos métodos:*
+
+<ul>
+<li>
+===compress===
+_public void addFile(FileInputStream in, String fileName);_
+
+Este método adiciona varios arquivos para serem compactados no formato zip
+Exemplo:
+{{{
+	FileInputStream in = this.getFileInput();
+	ZipFileCreator zip = new ZipFileCreator();
+	zip.addFile(in,"MeuArquivo.txt");
+	zip.compress();
+	zip.close();
+
+}}}
+
+</li>
+<li>
+===compress===
+_public File compress();_
+
+Este método compacta todos os arquivos que foram adicionado na classe.
+</li>
+
+===close===
+_public void close();_
+
+Este método finaliza todos os arquivos manipulados pela classe.
+</li>
+
+</ul>
