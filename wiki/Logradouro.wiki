@@ -1,0 +1,84 @@
+#summary Class Logradouro do OpenSutils-Br4J
+#labels Featured,Logradouro,Endereco,tipologradouro,Utils,Parser,Phase-Implementation
+
+=Logradouro=
+
+Está classe oferece métodos estáticos para manipular informações de logradouro, endereço.
+
+== Detalhes ==
+
+Os métodos disponíveis nesta classe são:
+
+<ul>
+<li>parseXmlTipoLogradouro(InputStream)</li>
+<li>parseTipoLogradouro(String)</li>
+<li>parseTipoLogradouro(String, List*<TipoLogradouro*>)</li>
+<li>removeTipoLogradouro(String)</li>
+<li>removeTipoLogradouro(String, List*<TipoLogradouro*>)</li>
+<li>clean()</li>
+</ul>
+
+*Informações dos métodos:*
+
+<ul>
+<li>
+===parseTipoLogradouro===
+_public static List*<TipoLogradouro*> parseXmlTipoLogradouro(InputStream in);_
+
+
+Este método parsea as regras dos tipos de logradouros e retorna em uma lista de objetos de TipoLogradouro
+Exemplo:
+{{{
+		
+	InputStream in = Logradouro.class.getResourceAsStream(FILE_NAME_CONF_TIPOS_LOGRADOUROS);
+	List*<TipoLogradouro*> tipoLogradouroList = Logradouro.parseXmlTipoLogradouro(in);
+	
+}}}
+
+</li>
+<li>
+===parseTipoLogradouro===
+_public static String[] parseTipoLogradouro(final String streetName,final List*<TipoLogradouro*> tipoLogradouroList);_
+_public String[] parseTipoLogradouro(final String streetName);_
+
+Este método parseia o tipo de logradouro de um endereço unificando o tipo de logradouro.
+Exemplo:
+{{{
+	Logradouro logradouro = new Logradouro();
+	String[] resp = logradouro.parseTipoLogradouro("AV   SERGIO LANDULFO FURTADO                                                    ");
+	//resp[0] equals to: "AVENIDA"
+	//resp[1] equals to: "SERGIO LANDULFO FURTADO"
+	
+	resp = logradouro.parseTipoLogradouro("TV   VIEIRA");
+	//resp[0] equals to: "TRAVESSA"
+	//resp[1] equals to: "VIEIRA"
+}}}
+
+</li>
+<li>
+===removeTipoLogradouro===
+_public String removeTipoLogradouro(final String streetName );_
+_public String removeTipoLogradouro(final String streetName, List*<TipoLogradouro*> list );_
+
+Este método remove os tipos de logradouro de um endereço.
+Exemplo:
+{{{
+Logradouro logradouro = new Logradouro();
+
+resp = logradouro.removeTipoLogradouro("R. Espártaco");
+//resp equals to: "Espártaco";
+
+resp = logradouro.removeTipoLogradouro("          AV SERGIO LANDULFO FURTADO   ");
+//resp equals to: "SERGIO LANDULFO FURTADO"
+
+}}}
+</li>
+<li>
+===clean===
+_public void clean();_
+
+Este método remove todas as instancias que a classe Logradouro está utilizando.
+
+}}}
+</li>
+</ul>
