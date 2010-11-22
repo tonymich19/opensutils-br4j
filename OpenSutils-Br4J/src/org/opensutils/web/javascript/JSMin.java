@@ -55,8 +55,12 @@
  * SOFTWARE.
  *
 */
-package org.opensutils.web;
+package org.opensutils.web.javascript;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -66,9 +70,9 @@ import java.io.PushbackInputStream;
  * @author Felipe Priuli 2010/11/22
  * @author John Reilly 2007-08-20
  * @author Douglas Crockford 2002
- * @version 0.1 (version of OpenSutils-Br4J)
+ * @version 0.2 (version of OpenSutils-Br4J)
  */
-public class JSMin {
+public class JSMin implements Minimizer{
 	private static final int EOF = -1;
 
 	private PushbackInputStream in;
@@ -77,11 +81,14 @@ public class JSMin {
 	private int theA;
 	private int theB;
 	
+	public JSMin() {
+	}
+	
 	public JSMin(InputStream in, OutputStream out) {
 		this.in = new PushbackInputStream(in);
 		this.out = out;
 	}
-
+	
 	/**
 	 * isAlphanum -- return true if the character is a letter, digit,
 	 * underscore, dollar sign, or non-ASCII character.
@@ -307,25 +314,60 @@ public class JSMin {
 		private static final long serialVersionUID = 1L;
 	}
 
-	/*
-	public static void main(String arg[]) {
+	/**
+	 * Pinching a JavaScript file, removing spaces, comments and changing names of variables in
+	 * order to decrease the size of a JavaScript file
+	 * @param in - The JavaScript File 
+	 * @param out - The out of JavaScript minimized
+	 * @throws IOException - If a problem to minimize the file.
+	 * @author Felipe Priuli
+	 */
+	@Override
+	public void compress(InputStream in, OutputStream out) throws IOException {
+		this.in = new PushbackInputStream(in);
+		this.out = out;
+		this.theA = 0;
+		this.theA = 0;
+		
 		try {
-			JSMin jsmin = new JSMin(new FileInputStream("c:\\teste\\meuJs.js"), System.out);
-			jsmin.jsmin();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (ArrayIndexOutOfBoundsException e) {
-			e.printStackTrace();			
-		} catch (IOException e) {
-			e.printStackTrace();
+			this.jsmin();
 		} catch (UnterminatedRegExpLiteralException e) {
-			e.printStackTrace();
+			throw new IOException("Unterminated regexp Literal", e);
 		} catch (UnterminatedCommentException e) {
-			e.printStackTrace();
+			throw new IOException("Unterminated comment", e);
 		} catch (UnterminatedStringLiteralException e) {
-			e.printStackTrace();
+			throw new IOException("Unterminated StringLiteral", e);
+		}finally{
+			if(this.out != null)
+				this.out.close();
+			
+		}
+		
+	}
+	/**
+	 * Pinching a JavaScript file, removing spaces, comments and changing names of variables in
+	 * order to decrease the size of a JavaScript file
+	 * @param in - The JavaScript File 
+	 * @param out - The new JavaScript minimized File
+	 * @throws IOException - If a problem to minimize the file.
+	 * @author Felipe Priuli
+	 */
+	public void compress(File in, File out) throws IOException {
+		this.in = new PushbackInputStream( new FileInputStream(in));
+		this.out = new BufferedOutputStream(new FileOutputStream(out));
+		
+		try {
+			this.jsmin();
+		} catch (UnterminatedRegExpLiteralException e) {
+			throw new IOException("Unterminated regexp Literal", e);
+		} catch (UnterminatedCommentException e) {
+			throw new IOException("Unterminated comment", e);
+		} catch (UnterminatedStringLiteralException e) {
+			throw new IOException("Unterminated StringLiteral", e);
+		}finally{
+			if(this.out != null)
+				this.out.close();	
 		}
 	}
-	 */
 
 }
