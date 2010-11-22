@@ -1,0 +1,137 @@
+#summary Class ReflectUtils do OpenSutils-Br4J
+#labels Reflect,Reflection,Featured,Phase-Implementation,Generics,Java,Utils,toString
+
+=ReflectUtils=
+
+Está classe oferece métodos estáticos para manipular objetos atraves de java Reflection.
+
+== Detalhes ==
+
+Os métodos disponíveis nesta classe são:
+
+<ul>
+<li>clone(Class*<T*>, T)</li>
+<li>generateNameGetClass(Class)</li>
+<li>generateNameGetMethod(Field)</li>
+<li>generateNameGetMethod(String)</li>
+<li>generateNameSetMethod(Field)</li>
+<li>generateNameSetMethod(String)</li>
+<li>getIdsFieldInCollection(Collection)</li>
+<li>isWrapperPrimitive(Object)</li>
+<li>toString(Object, boolean)</li>
+<li>toString(Object, boolean, boolean)</li>
+</ul>
+
+*Informações dos métodos:*
+
+<ul>
+<li>
+===clone===
+_public static *<T*> T clone(Class*<T*> entityClass,final T obj) ;_
+
+
+Este método cria uma nova instancia de uma classe copiando todas as informações de uma classe para outra utilizando
+reflection. É necessario que exista um contrutor default.
+Exemplo:
+{{{
+		
+	MockClass mockClass = this.getMyClass();
+		
+	MockClass result = ReflectUtils.clone(MockClass.class, mockClass);
+	
+	//result == mockClass is false
+	//(result 'value fields' equals to: 'mockClass value fields') -> is true
+	
+}}}
+
+</li>
+<li>
+===generateNameGet***===
+_public static String generateNameGetClass(Class c);_
+_public static String generateNameGetMethod(Field field);_
+_public static String generateNameGetMethod(String fieldName);_
+
+Este método obtem o nome da classe/campo.
+Exemplo:
+{{{
+	ReflectUtils.generateNameGetClass(MockClass.class)
+	.equals("mockClass")//is true
+}}}
+
+</li>
+<li>
+===generateNameSet***===
+_public static String generateNameSetMethod(Field field);_
+_public static String generateNameSetMethod(String fieldName);_
+
+Este método obtem o nome do método set de um campo.
+Exemplo:
+{{{
+	Field field = mockClass.getClass().getField("numberFloat");
+	String result = ReflectUtils.generateNameSetMethod( field);
+	result.equals("setNumberFloat"));//is true
+}}}
+
+</li>
+
+<li>
+===getIdsFieldInCollection===
+_public static List*<Object*> getIdsFieldInCollection(Collection collection);_
+
+Este método obtem todos os valores dos campos que tem o nome de ID/id nos objetos da collection.
+Exemplo:
+{{{
+	
+
+	List*<MockClass*> list = new ArrayList*<MockClass*>();
+	list.add( new MockClass(1L));//passando id no contrutor da classe
+	list.add( new MockClass(2L));//passando id no contrutor da classe
+	list.add( new MockClass(3L));//passando id no contrutor da classe
+	list.add( new MockClass(4L));//passando id no contrutor da classe
+
+	List*<Object*> resultList = ReflectUtils.getIdsFieldInCollection(list);
+
+	//((Long) resultList.get(0)) == 1L ) is true
+	//((Long) resultList.get(1)) == 2L ) is true
+	//((Long) resultList.get(2)) == 3L ) is true
+	//((Long) resultList.get(3)) == 4L ) is true
+
+}}}
+</li>
+
+<li>
+===isWrapperPrimitive===
+_public static boolean isWrapperPrimitive(Object obj);_
+
+Este método verifica se um objeto é do tipo primitivo.
+Exemplo:
+{{{
+	
+
+	ReflectUtils.isWrapperPrimitive(new Long(1))		// result is true
+	ReflectUtils.isWrapperPrimitive(new Integer(1))		// result is true
+	ReflectUtils.isWrapperPrimitive(new Boolean(false))	// result is true
+	ReflectUtils.isWrapperPrimitive(new Short((short)1))	// result is true
+	ReflectUtils.isWrapperPrimitive(new Double(100.5))	// result is true
+	ReflectUtils.isWrapperPrimitive(new BigDecimal(1))	// result is true
+	ReflectUtils.isWrapperPrimitive(new String("teste") 	// result is true
+	ReflectUtils.isWrapperPrimitive(new Float(1.2))		// result is true
+
+}}}
+</li>
+<li>
+===toString===
+_public static String toString(final Object obj, boolean recursive);_
+_public static String toString(final Object obj, boolean recursive, boolean ignoreCollection);_
+
+Este método obtem em uma String todos os campos visiveis de um objeto.
+Exemplo:
+{{{
+
+	MockClass mockClass = this.getMyClass();	
+	String resp = ReflectUtils.toString(mockClass, true);
+	//resp.equals("MockClass [id=789456123, name=MockClass JUnit Test, nameNull=null, value=22225, numberShort=1, numberInteger=74411, numberFloat=2.0, boo=true, mockClass=MockClass [id=0, name=null, nameNull=it a value, not null., value=null, numberShort=0, numberInteger=null, numberFloat=null, boo=false, mockClass=null, fieldNotGetMethod=null], fieldNotGetMethod=teste]"));
+}}}
+</li>
+
+</ul>
