@@ -22,7 +22,9 @@ Os métodos disponíveis nesta classe são:
 <li>
 ===compress===
 _public static File compress(String, String, String);_
+
 _public static File compress(String[], String);_
+
 _public static File compress(String[], String[], String);_
 
 Este método comprimi os arquivos encontrados e retorna um unico arquivo compactado no formato zip;
