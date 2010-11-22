@@ -1,0 +1,110 @@
+#summary Class FTPApacheCommonsNetImpl do OpenSutils-Br4J
+#labels ApacheCommonsNet,FTP,Utils,Featured
+
+=FTPApacheCommonsNetImpl=
+
+Está classe implementa a interface FTP do OpenSutils e oferece métodos para facilitar a copia de arquivos
+para um servidor ftp atraves das bibliotecas da Apache Commons Net. 
+
+Está classe precisa da lib: commons-net-1.4.1.jar ou superior para funcionar e pode ser obtida em
+http://commons.apache.org/net/download_net.cgi
+
+== Detalhes ==
+
+Os métodos disponíveis nesta classe são:
+
+<ul>
+<li>copyFileToHost(File, String)</li>
+<li>copyFileToHost(File, String, String)</li>
+<li>copyFileToHost(InputStream, String, String)</li>
+<li>copyFileToHost(String, String)</li>
+<li>createDirectory(String)</li>
+<li>deleteDirectory(String)</li>
+<li>deleteFile(String, String)</li>
+<li>getAttemptsCount()</li>
+<li>getFile(String)</li>
+<li>getFile(String, String)</li>
+<li>getFileType()</li>
+<li>listFilesFromHost(String)</li>
+<li>setAttemptsCount(int)</li>
+<li>setFileType(FILE_TYPE)</li>
+</ul>
+
+*Informações dos métodos:*
+
+<ul>
+<li>
+===copyFileToHost===
+_public boolean copyFileToHost(File file,String dirHost);_
+_public boolean copyFileToHost(	String pathFile,String dirHost);_
+_public boolean copyFileToHost(	File file, String fileName, String dirHost);_
+_public boolean copyFileToHost(InputStream inputStream, String fileName, String dirHost);_
+
+Este método copia arquivos para um servidor ftp.
+
+</li>
+<li>
+===createDirectory===
+_public boolean createDirectory(String newDir);_
+
+Este método cria uma pasta no servidor ftp conectado
+</li>
+<li>
+===deleteDirectory===
+_public boolean deleteDirectory(String dir);_
+
+Este método excluir uma pasta no servidor ftp conectado
+</li>
+<li>
+===deleteFile===
+_public boolean deleteFile(String dirHost, String fileName );_
+
+Este método excluir um arquivo no servidor ftp conectado
+</li>
+<li>
+===getAttemptsCount===
+_public int getAttemptsCount();_
+
+Este método obtém a quantidade máxima de tentativas caso haja algum problema com a comunicação com o 
+servidor ftp
+</li>
+<li>
+===getFile===
+_public File getFile(String fileName);_
+_public File getFile(String dirHost,String fileName);_
+
+Este método obtem um arquivo do servidor ftp conectado.
+</li>
+<li>
+===getFileType===
+_public FILE_TYPE getFileType();_
+
+Este método obtém o tipo binário que será utilizado para copiar e obter arquivos do servidor ftp.
+@see	FTP.FILE_TYPE.BINARY
+@see 	FTP.FILE_TYPE.ASCII
+</li>
+<li>
+===listFilesFromHost===
+_public String[] listFilesFromHost(String dirHost);_
+
+Este método obtém todos os nomes dos arquivos, que estão em uma pasta do servidor ftp concitado.
+
+</li>
+<li>
+===setAttemptsCount===
+_public void setAttemptsCount(int attemptsCount);_
+
+Este método seta a quantidade máxima de tentativas para quando ocorrer erros de comunicação com o 
+servidor ftp conectado.
+
+</li>
+<li>
+===setFileType===
+_public void setFileType(FILE_TYPE fileType);_
+
+Este método seta o tipo binário que será utilizado para copiar e obter arquivos do servidor ftp.
+@see	FTP.FILE_TYPE.BINARY
+@see 	FTP.FILE_TYPE.ASCII
+</li>
+
+</ul>
