@@ -1,0 +1,101 @@
+#summary Class StringUtils do OpenSutils-Br4J
+#labels StringUtils,Featured,Phase-Implementation,Java,Utils,abbreviate,abreviação,Accentuation,Acentuação,Pad
+
+= StringUtils =
+
+Está classe abstrata oferece métodos estáticos para utilização com a classe
+java.lang.String do Java6+ afim de porporcionar funcionalidades para facilitar o 
+manuseio de textos.
+
+== Detalhes ==
+
+Os métodos disponíveis nesta classe são:
+
+<ul>
+<li>
+===abbreviateName===
+_public static String abbreviateName(String, int);_
+
+Este método abrevia um nome completo diminuindo-o até a posição informada no segundo parâmetro deste método. A abreviação apenas é realizada no nome do meio(sobrenome) e apenas se o nome for maior que o tamanho definido.
+Exemplo:
+{{{
+	String resp = StringUtils.abbreviateName("BARTOLOMEU SILVADOS SANTOS DIAS", 30);
+	//resp equals to: "BARTOLOMEU S. S. DIAS
+}}}
+</li>
+<li>
+===capitalize===
+_public static String capitalize(final String value);_
+
+Este método transforma a primeira letra, da primeira palavra do parâmetro, em maiúscula mantendo as 
+
+outras letras como estão.
+</li>
+<li>
+===capitalizeAll===
+_public static String capitalizeAll(final String value);_
+
+Este método transforma todas as primeiras letras, de cada palavra, em maiúscula mantendo as outras letras como estão.
+</li>
+<li>
+===leftPad===
+_public static String leftPad(String value, int size,String pad);_
+
+Este método adiciona um texto(@param pad) do lado esquerdo do primeiro parâmetro (@param value) até preencher o tamanho(@param size)
+Exemplo:
+{{{
+	String value = "2333";
+	String resp = StringUtils.leftPad(value,5,"R");
+	//resp equals to: "R2333"
+	
+	resp = StringUtils.leftPad(value,8," ");
+	//resp equals to: "    2333"
+}}}
+</li>
+<li>
+===parseNameFile===
+_public static String parseNameFile(final String path);_
+
+Este método obtém o nome de um arquivo a partir de um caminho completo de um arquivo(@param path)
+Exemplo:
+{{{
+String result = StringUtils.parseNameFile("c:\\test\\file\\file1.txt"); 
+//result equals to: "file1.txt"
+}}}
+</li>
+<li>
+===remove===
+_public static String remove(final String value,char... charSymbols);_
+
+Este método remove todos os caracteres do parâmetro 'value' que forem igual as caracteres do parametro 'charSymbols'
+</li>
+<li>
+===removeAccentuation===
+_public static String removeAccentuation(final String value);_
+
+Este método remove todas as acentuações das letras que tem acentuação.
+Exemplo:
+{{{
+	String str = "SÃO PRAÇA JOSÉ É DAS";
+	//str equalst to : "SAO PRACA JOSE E DAS"
+}}}
+</li>
+<li>
+===removeSymbols===
+_public static String removeSymbols(final String value);_
+
+Este método remove todos os caracteres de símbolos, aqueles que não são numero e letras, a virgula(',') e ponto('.') são mantidos.
+</li>
+<li>
+===rightPad===
+_public static String rightPad(	String value,int tamanho,String pad);_
+
+Este metodo adiciona um texto(@param pad) do lado direito do primeiro parâmetro (@param value) até preencher o tamanho(@param size)
+Exemplo:
+{{{
+	String value = "2525225252";
+	String resp = StringUtils.rightPad(value,14,"0");
+	//resp equals to: "25252252520000"
+}}}
+</li>
+</ul>
