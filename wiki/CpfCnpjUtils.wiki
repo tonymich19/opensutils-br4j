@@ -1,0 +1,172 @@
+#summary Class CpfCnpjUtils do OpenSutils-Br4J
+#labels Util,Featured,CpfCnpj,Validation,Validação,Cpf,Cnpj
+
+=CpfCnpjUtils=
+
+Está classe abstrata oferece métodos estáticos para validação, formatação de Cpf e Cnpj
+afim de proporcionar funcionalidades para facilitar tais validações.
+
+== Detalhes ==
+
+Os métodos disponíveis nesta classe são:
+
+<ul>
+<li>cnpjToString(long)</li>
+<li>cnpjToString(String)</li>
+<li>cpfCnpjToString(long)</li>
+<li>cpfCnpjToString(String)</li>
+<li>cpfToString(long)</li>
+<li>cpfToString(String)</li>
+<li>formatCnpj(long)</li>
+<li>formatCnpj(String)</li>
+<li>formatCpf(long)</li>
+<li>formatCpf(String)</li>
+<li>formatCpfOrCnpj(long)</li>
+<li>isValidCnpj(long)</li>
+<li>isValidCnpj(String)</li>
+<li>isValidCpf(long)</li>
+<li>isValidCpf(String)</li>
+<li>isValidCpfOrCnpj(long)</li>
+<li>isValidCpfOrCnpj(String)</li>
+</ul>
+
+*Informações dos métodos:*
+
+<ul>
+<li>
+===cnpjToString===
+_public static String cnpjToString(final long cnpj);_
+_public static String cnpjToString(final String cnpj);_
+
+Este método converte um numero de cnpj em texto sem formatação;
+Este método não faz verificação da validação do cpf.
+Exemplo:
+{{{
+	String resp = CpfCnpjUtils.cnpjToString(245526522L);
+	resp.equals("00000245526522") // is true
+}}}
+
+</li>
+<li>
+===cpfCnpjToString===
+_public static String cpfCnpjToString(final long cpfCnpj);_
+_public static String cpfCnpjToString(final String cpfCnpj);_
+
+Este método converte um numero de cpf ou cnpj em texto sem formatação;
+Este método faz uma verificação na validação do parm1 para identificar o tipo de formatação.
+Exemplo:
+{{{
+	String resp = CpfCnpjUtils.cpfCnpjToString(689165234L);//is valid cpf
+	resp.equals("00689165234") // is true
+}}}
+</li>
+<li>
+===cpfToString===
+_public static String cpfToString(final long cpfCnpj);_
+_public static String cpfToString(final String cpf);_
+
+Este método converte um numero de cpf em texto sem formatação;
+Este método não faz verificação da validação do cpf.
+Exemplo:
+{{{
+		resp = CpfCnpjUtils.cpfToString("554444");
+		resp.equals("00000554444") //is true
+}}}
+</li>
+<li>
+===formatCnpj===
+_public static String formatCnpj(final long cnpj);_
+_public static String formatCnpj(final String cnpj);_
+
+Este método converte um numero, ou string no formato de cnpj valido. 
+Este método não faz verificação da validação do cpf.
+Exemplo:
+{{{
+	String resp = CpfCnpjUtils.formatCnpj("00245526522");
+	//resp equals to: "00.000.245/5265-22
+
+}}}
+</li>
+<li>
+===formatCpf===
+_public static String formatCpf(final long cpf);_
+_public static String formatCpf(final String cpf);_
+
+Este método converte um numero, ou string no formato de cpf valido. 
+Este método não faz verificação da validação do cpf.
+Exemplo:
+{{{
+	resp = CpfCnpjUtils.formatCpf("124244");
+	////resp equals to: "000.001.242-44"
+
+}}}
+</li>
+<li>
+===formatCpfOrCnpj===
+_public static String formatCpfOrCnpj(final long cpfCnpj);_
+
+Este método converte um long no formato de um cpf ou cnpj.
+O parâmetro deve ser um cpf ou cnpj valido para identificação do mesmo na formatação, este
+método faz uma verificação da validação de um cpf para identificar a sua formatação.
+Exemplo:
+{{{
+	resp = CpfCnpjUtils.formatCpf("124244");
+	////resp equals to: "000.001.242-44"
+
+}}}
+</li>
+<li>
+===isValidCnpj===
+_public static boolean isValidCnpj(long cnpj);_
+_public static boolean isValidCnpj(final String cnpj);_
+
+Este método verifica se um cnpj é valido de acordo com o algoritmo de validação de cnpj.
+Exemplo:
+{{{
+	boolean resp = CpfCnpjUtils.isValidCnpj("04312419000130");//CNPJ valido
+	//resp equals to: true
+	
+	resp = CpfCnpjUtils.isValidCnpj("043blabla131");//CNPJ invalido
+	//resp equals to: false
+
+}}}
+</li>
+<li>
+===isValidCpf===
+_public static boolean isValidCpf(final long cpf);_
+_public static boolean isValidCpf(final String cpf);_
+
+Este método verifica se um cpf(@param1) é valido de acordo com o algoritmo de validação de cpf.
+Exemplo:
+{{{
+	resp = CpfCnpjUtils.isValidCpf("33596438950");//Cpf valido
+	//resp equals to: true
+	
+	resp = CpfCnpjUtils.isValidCpf("33596438951");//Cpf invalido
+	//resp equals to: false
+
+}}}
+</li>
+<li>
+===isValidCpfOrCnpj===
+_public static boolean isValidCpfOrCnpj(final long cpfCnpj);_
+_public static boolean isValidCpfOrCnpj(final String cpfCnpj);_
+
+Este método verifica se um long ou String é um cpf ou cnpj valido de acordo com o algoritmo de 
+validação de cpf ou cnpj.
+Exemplo:
+{{{
+	resp = CpfCnpjUtils.isValidCpfOrCnpj("33596438950");//Cpf valido
+	//resp equals to: true (is valid cpf)
+	
+	resp = CpfCnpjUtils.isValidCpfOrCnpj("04312419000130");//CNPJ valido
+	//resp equals to: true (is valid cnpj)
+	
+	resp = CpfCnpjUtils.isValidCpfOrCnpj("04312419000131");//CNPJ invalido
+	//resp equals to: false (not cpf and not cpnj valid)
+}}}
+</li>
+
+
+
+</ul>
