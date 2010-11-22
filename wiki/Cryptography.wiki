@@ -1,0 +1,45 @@
+#summary Class Cryptography do OpenSutils-Br4J
+#labels Cryptography,Featured,MD5,SHA1,SHA-1,Criptografia,Utils
+
+=Cryptography=
+
+Está classe abstrata oferece métodos estáticos para criptografar valores utilizando Sha1 e Md5.
+
+== Detalhes ==
+
+Os métodos disponíveis nesta classe são:
+
+<ul>
+<li>toMD5(String)</li>
+<li>toSHA1(String)</li>
+</ul>
+
+*Informações dos métodos:*
+
+<ul>
+<li>
+===toMD5===
+_public static String toMD5(String value);_
+
+Este método criptograva uma String no algoraitmo de MD5
+Exemplo:
+{{{
+	String senha = "senha";
+	Cryptography.toMD5(senha);
+}}}
+
+</li>
+
+<li>
+===toSHA1===
+_public static String toSHA1(String value);_
+
+Este método criptograva uma String no algoraitmo de SHA-1
+Exemplo:
+{{{
+	String senha = "senha";
+	Cryptography.toSHA1(senha);
+}}}
+</li>
+
+</ul>
