@@ -12,6 +12,20 @@ manuseio de textos.
 Os métodos disponíveis nesta classe são:
 
 <ul>
+<li>abbreviateName(String, int)</li>
+<li>capitalize(String)</li>
+<li>capitalizeAll(String)</li>
+<li>ignoreEmpty(String)</li>
+<li>leftPad(String, int, String)</li>
+<li>parseNameFile(String)</li>
+<li>remove(String, char...)</li>
+<li>removeAccentuation(String)</li>
+<li>removeSymbols(String)</li>
+<li>rightPad(String, int, String)</li>
+</ul>
+
+
+<ul>
 <li>
 ===abbreviateName===
 _public static String abbreviateName(String, int);_
@@ -36,6 +50,16 @@ outras letras como estão.
 _public static String capitalizeAll(final String value);_
 
 Este método transforma todas as primeiras letras, de cada palavra, em maiúscula mantendo as outras letras como estão.
+</li>
+<li>
+===ignoreEmpty===
+_public static String ignoreEmpty(final String value);_
+
+Este metodo ignora valores vazios retornando null para estes casos.
+Exemplo:
+{{{
+	StringUtils.ignoreEmpty("  ") == null //is true
+}}}
 </li>
 <li>
 ===leftPad===
