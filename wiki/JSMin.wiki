@@ -1,0 +1,49 @@
+#summary Class JSMin do OpenSutils-Br4J
+#labels JSMin,JavaScript,Minimizer,Minimizador,Featured,Phase-Implementation,Java,Utils,Compress
+
+=JSMin=
+
+Está classe oferece funcionalidades para diminuir arquivos de JavaScript, minimizando o seu tamanho sem perder sua funcionalidade.
+Está classe implementa a interface Minimizer, e foi modificada do original JSMin
+
+== Detalhes ==
+
+Os métodos disponíveis nesta classe são:
+
+<ul>
+<li>jsmin()</li>
+<li>compress(File, File)</li>
+<li>compress(InputStream, OutputStream)</li>
+</ul>
+
+*Informações dos métodos:*
+
+<ul>
+<li>
+===jsmin===
+_public void jsmin();_
+
+Este método comprimi o codigo fonte de um JavaScript diminuindo o seu tamanho sem perder a sua funcionalidade.
+Exemplo:
+{{{
+	JSMin jsmin = new JSMin(new FileInputStream("c:\\teste\\meuJs.js"), System.out);
+	jsmin.jsmin();
+	
+}}}
+
+</li>
+<li>
+===compress===
+_public void compress(File in, File out);_
+_public void compress(InputStream in, OutputStream out);_
+
+Este método comprimi o codigo fonte de um JavaScript diminuindo o seu tamanho sem perder a sua funcionalidade.
+Exemplo:
+{{{
+	Minimizer minimizer = new JSMin(new FileInputStream("c:\\teste\\meuJs.js"), System.out);
+	minimizer.compress(new File("c:\\teste\\meuJs.js"), new File("c:\\teste\\meuJs.min.js"));
+	
+}}}
+</li>
+
+</ul>
