@@ -1,0 +1,54 @@
+#summary Class HexaDecimalUtils do OpenSutils-Br4J
+#labels HexaDecimal,Hexa,Featured,Phase-Implementation,Utils,Java
+
+=HexaDecimalUtils=
+
+Está classe oferece métodos estáticos para converter valores em HexaDecimal
+
+== Detalhes ==
+
+Os métodos disponíveis nesta classe são:
+
+<ul>
+<li>toByte(String)</li>
+<li>toByteArray(String)</li>
+<li>toString(byte)</li>
+<li>toString(byte[])</li>
+</ul>
+
+*Informações dos métodos:*
+
+<ul>
+<li>
+===toByte===
+_public static final byte toByte(final String strHexa);_
+
+_public static final byte[] toByteArray(final String strHexa);_
+
+Este método converte uma String hexadecimal em um vetor de bytes(String)
+Exemplo:
+{{{
+		byte[] bytes = HexaDecimalUtils.toByteArray("47656E65726174657320612068657861646563696D616C20537472696E67");
+		String resp = new String(bytes);
+		//resp equals to: "Generates a hexadecimal String"
+}}}
+
+</li>
+<li>
+===toString===
+_public static final String toString(final byte bits);_
+
+_public static final String toString(final byte[] bytes);_
+
+Este método converte um vetor de bytes(String) em uma String HexaDecimal
+descompactados;
+Exemplo:
+{{{
+		String resp = HexaDecimalUtils.toString("Generates a hexadecimal String".getBytes());
+
+		//resp equals to: "47656E65726174657320612068657861646563696D616C20537472696E67"
+		
+}}}
+</li>
+
+</ul>
