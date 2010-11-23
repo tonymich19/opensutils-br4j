@@ -40,7 +40,8 @@ import java.util.List;
  */
 public class ReflectUtils {
 
-	@SuppressWarnings("unchecked")
+	
+	@SuppressWarnings(value={"unchecked","rawtypes"})
 	/**
 	 * Copies information from one object to another new object by cloning the
 	 * public fields and private fields that have protected or gets and sets
@@ -54,6 +55,7 @@ public class ReflectUtils {
 							  ) throws InstantiationException, SecurityException{
 		
 		try{
+			
 			Constructor[] construtores = Class.forName(entityClass.getName()).getConstructors();
 			Constructor constructor = null;
 			for (Constructor c : construtores) {
@@ -104,7 +106,7 @@ public class ReflectUtils {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	/**
 	 * Generates the name of a class
 	 * @return string of get class
@@ -153,7 +155,7 @@ public class ReflectUtils {
 		return toString(obj, recursive, false);
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	/**
 	 * Scans the visible fields from object and returns the values and field names in a string<br>
 	 * This method not use set method os a obj.
@@ -213,7 +215,7 @@ public class ReflectUtils {
         return resultToString.toString().replace(", ]", "]");		
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	/**
 	 * Traverses the list and get all the fields named id, ID
 	 * @return List of ids value field.

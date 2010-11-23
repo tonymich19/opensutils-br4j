@@ -1,5 +1,5 @@
 /*
- * 	 @(#)TipoLogradouro.java	0.2 10/11/22
+ * 	 @(#)Minimizer.java	0.2 10/11/22
  * 
  *	Copyright (c) 2010 Felipe Priuli
  *
@@ -29,7 +29,7 @@ import java.io.OutputStream;
  * <code>Minimizer</code> interface for use to minimize a JavaScript.
  * 
  * @author Felipe Priuli
- * @version 0.1
+ * @version 0.2
  *
  */
 public interface Minimizer {

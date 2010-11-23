@@ -1,4 +1,5 @@
 /*
+ * 	@(#)CpfCnpjUtils.java	1.2 10/11/22
  *	Copyright (c) 2010 Felipe Priuli
  *
  *	This file is part of OpenSutils-Br4J.
@@ -25,10 +26,12 @@ import java.util.regex.Pattern;
  * The class <code>CpfCnpjUtils</code> is used for validade, convert and parse 
  * the cpf or cnpj values, is a Utility for CPFCNPJ
  * 
- * @version 1.0
+ * @version 1.2
  * @author Felipe Priuli
  */
-public abstract class CpfCnpjUtils {
+public final class CpfCnpjUtils {
+	
+	private CpfCnpjUtils(){}
  
 	/**
 	 * Given value of CNPJ. 

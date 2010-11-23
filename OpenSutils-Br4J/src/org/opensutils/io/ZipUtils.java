@@ -38,7 +38,9 @@ import java.util.zip.ZipOutputStream;
  * @version 0.6
  * @author Felipe Priuli
  */
-public abstract class ZipUtils {
+public final class ZipUtils {
+	
+	private ZipUtils(){}
 
 	/**
 	 * Method to compress one or more files

@@ -1,5 +1,5 @@
-package org.opensutils;
 /*
+ * 	@(#)CharSymbols.java	0.2 10/11/22
  *	Copyright (c) 2010 Felipe Priuli
  *
  *	This file is part of OpenSutils-Br4J.
@@ -16,12 +16,15 @@ package org.opensutils;
  *	You should have received a copy of the GNU Lesser General Public License
  *	along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+package org.opensutils;
+
 import java.util.ArrayList;
 
 /**
  * The class <code>CharSymbols</code> is utility for char symbols.
 
- * @version 0.1
+ * @version 0.2
  * @author Felipe Priuli
  */
 public class CharSymbols {

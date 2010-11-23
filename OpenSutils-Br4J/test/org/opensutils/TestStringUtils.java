@@ -394,6 +394,23 @@ public class TestStringUtils {
 		resp = StringUtils.capitalizeAll(System.getProperty("line.separator")+" meu          teste ");
 		assertTrue("RESULTADO INVALIDO", resp.equals(System.getProperty("line.separator")+" Meu          Teste "));
 	}
+	@Test
+	public void testIgnoreEmpty(){
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.ignoreEmpty(null) == null);
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.ignoreEmpty("") == null);
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.ignoreEmpty("                               ") == null);
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.ignoreEmpty("  ") == null);
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.ignoreEmpty("Valirvkj ajsu Ukd4 5 6a ").equals("Valirvkj ajsu Ukd4 5 6a "));
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.ignoreEmpty("             JUnit       Test  ").equals("             JUnit       Test  "));
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.ignoreEmpty("555").equals("555"));
+	}
 	
 }
 

@@ -1,5 +1,5 @@
 /*
- * 	 @(#)DateFormat.java	1.5 10/11/22
+ * 	 @(#)DateFormat.java	1.6 10/11/22
  *	Copyright (c) 2010 Felipe Priuli
  *
  *	This file is part of OpenSutils-Br4J.
@@ -24,10 +24,12 @@ import java.util.Date;
  * The class <code>DateFormat</code> is used for validade, convert and parser 
  * dates.
  * 
- * @version 1.5
+ * @version 1.6
  * @author Felipe Priuli
  */
-public abstract class DateFormat {
+public final class DateFormat {
+	
+	private DateFormat(){}
 	
 	public static final short YYYYMMDD = 1;
 	public static final short DDMMYYYY = 2;

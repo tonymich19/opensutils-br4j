@@ -1,5 +1,5 @@
 /*
- * 	 @(#)StringUtils.java	1.3 10/11/22
+ * 	 @(#)StringUtils.java	1.4 10/11/22
  * 
  *	Copyright (c) 2010 Felipe Priuli
  *
@@ -25,10 +25,12 @@ import java.util.regex.Pattern;
 /**
  * The class <code>StringUtils</code> is utility for working with text values.
 
- * @version 1.3
+ * @version 1.4
  * @author Felipe Priuli
  */
-public abstract class StringUtils {
+public final class StringUtils {
+	
+	private StringUtils(){}
 	
 	/**
 	 * Abrevia um nome que for maior do que o tamanho passado, sempre o primeiro e ultimo nome são mantidos.
@@ -260,5 +262,19 @@ public abstract class StringUtils {
 		sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
 		return sb.toString();
 	}
-	
+	/**
+	 * This method ignores empty values returning null for this cases.
+	 * <br>
+	 * if(value == null || value.trim().isEmpty())
+			return null;
+			
+	 * @param value
+	 * @return value 
+	 */
+	public static String ignoreEmpty(final String value){
+		if(value == null || value.trim().isEmpty())
+			return null;
+		
+		return value;
+	}
 }
