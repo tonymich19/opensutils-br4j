@@ -25,7 +25,7 @@ import org.junit.Test;
 import org.opensutils.StringUtils;
 
 
-public class TestStringUtils {
+public class StringUtilsTest {
 
 	
 	@Before
@@ -411,6 +411,100 @@ public class TestStringUtils {
 		
 		assertTrue("RESULTADO INVALIDO", StringUtils.ignoreEmpty("555").equals("555"));
 	}
+
 	
+	@Test
+	public void testTruncateAndRightPad(){
+
+		assertTrue("RESULTADO INVALIDO", StringUtils.truncateAndRightPad("VALOR", 12, "X"  ).equals("VALORXXXXXXX"));
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.truncateAndRightPad("VaLoR", 12, "X"  ).equals("VaLoRXXXXXXX"));
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.truncateAndRightPad("VaLoR", 10, " "  ).equals("VaLoR     "));
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.truncateAndRightPad("         VaLoR         ", 10, " "  ).equals("VaLoR     "));
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.truncateAndRightPad("1125-X", 10, " "  ).equals("1125-X    "));
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.truncateAndRightPad("123456789", 5, " "  ).equals("12345"));
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.truncateAndRightPad("            123456789", 5, " "  ).equals("12345"));
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.truncateAndRightPad("            123456789          ", 5, " "  ).equals("12345"));
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.truncateAndRightPad("                      ", 5, " "  ).equals("     "));
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.truncateAndRightPad("                      ", 2, " "  ).equals("  "));
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.truncateAndRightPad("                      ", 2, "0"  ).equals("00"));
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.truncateAndRightPad(null, 2, "0"  ).equals("00"));
+		
+		try{
+			StringUtils.truncateAndRightPad(null, 2, null  );
+			fail("Resultado incorreto, era esperado NullPointerException");
+		}catch(NullPointerException nfe){
+			
+		}
+		
+	}
+	
+	@Test
+	public void testTruncateAndLeftPad(){
+
+		assertTrue("RESULTADO INVALIDO", StringUtils.truncateAndLeftPad("VALOR", 12, "X"  ).equals("XXXXXXXVALOR"));
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.truncateAndLeftPad("VaLoR", 12, "X"  ).equals("XXXXXXXVaLoR"));
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.truncateAndLeftPad("VaLoR", 10, " "  ).equals("     VaLoR"));
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.truncateAndLeftPad("         VaLoR         ", 10, " "  ).equals("     VaLoR"));
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.truncateAndLeftPad("1125-X", 10, " "  ).equals("    1125-X"));
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.truncateAndLeftPad("123456789", 5, " "  ).equals("12345"));
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.truncateAndLeftPad("123456789", 20, "0"  ).equals("00000000000123456789"));
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.truncateAndLeftPad("            123456789", 5, " "  ).equals("12345"));
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.truncateAndLeftPad("            123456789          ", 5, " "  ).equals("12345"));
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.truncateAndLeftPad("                      ", 5, " "  ).equals("     "));
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.truncateAndLeftPad("                      ", 2, " "  ).equals("  "));
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.truncateAndLeftPad("                      ", 2, "0"  ).equals("00"));
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.truncateAndLeftPad(null, 2, "0"  ).equals("00"));
+		
+		try{
+			StringUtils.truncateAndLeftPad(null, 2, null  );
+			fail("Resultado incorreto, era esperado NullPointerException");
+		}catch(NullPointerException nfe){
+			
+		}
+	}
+	
+	@Test
+	public void testisNullOrEmpty(){
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.isNullOrEmpty(null));
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.isNullOrEmpty(""));
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.isNullOrEmpty("           "));
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.isNullOrEmpty(" "));
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.isNullOrEmpty( "    test ") == false);
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.isNullOrEmpty(".") == false);
+		
+		assertTrue("RESULTADO INVALIDO", StringUtils.isNullOrEmpty("132456789") == false);
+		
+		
+		
+	}
 }
 

@@ -25,7 +25,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-public class TestCpfCnpjUtils {
+public class CpfCnpjUtilsTest {
 
 	@Before
 	public void setUp() throws Exception {

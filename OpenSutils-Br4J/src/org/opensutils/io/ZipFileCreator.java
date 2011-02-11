@@ -36,34 +36,36 @@ import java.util.zip.ZipOutputStream;
  * @author Felipe Priuli
  * @version 0.9
  */
-public class ZipFileCreator {
+public class ZipFileCreator implements FileCompression{
 	private FileOutputStream out;
 	private ZipOutputStream zipOut;  
 	private BufferedInputStream bufferIn;
 	private ZipEntry zipEntry;
-	private String absoluteDirArquivo;
+	private String outputAbsoluteDir;
 	
 	/**
 	 * Constructor
-	 * @param absoluteDirArquivo - java.lang.String, absolute directory name to out files
+	 * @param outputAbsoluteDir - java.lang.String, absolute directory name to out files
 	 * @throws FileNotFoundException
 	 */
-	public ZipFileCreator(String absoluteDirArquivo) throws FileNotFoundException{
-		this.absoluteDirArquivo = absoluteDirArquivo;
-		this.out = new FileOutputStream(absoluteDirArquivo);
-		this.zipOut = new ZipOutputStream(new BufferedOutputStream(this.out));
+	public ZipFileCreator(String outputAbsoluteDir) throws FileNotFoundException{
+		this.outputAbsoluteDir = outputAbsoluteDir;
+		this.out = null;
+		this.zipOut = null;
 		this.zipEntry = null;
 		this.bufferIn = null;
 	}
 	
 	/**
-	 * Add a file to compress to zip.
+	 * Adds a file to be compressed.
 	 * @param in - FileInputStream
-	 * @param fileName - java.lang.String
-	 * @throws IOException
+	 * @param fileName - Name of file
+	 * @throws IOException - If a problem I/O occurs
 	 */
 	public void addFile(FileInputStream in, String fileName) throws IOException{
-		if( this.out != null && zipOut != null && in != null && fileName!=null){
+		if(!isOpen()){open();};
+		
+		if( fileName!=null){
 			this.bufferIn = new BufferedInputStream(in);
 			this.zipEntry = new ZipEntry(fileName);
 			this.zipOut.putNextEntry(this.zipEntry);
@@ -80,15 +82,40 @@ public class ZipFileCreator {
 	}
 	
 	/**
-	 * Compress files to zip
-	 * @return the file-zip
-	 * @throws IOException 
+	 * Adds a directory to be compressed.
+	 * <br><i>Add in version 0.2</i>
+	 * @param dir - the directory
+	 * @throws IOException - If a problem I/O occurs
+	 */
+	public void addDirectory(File dir) throws IOException{
+		if(dir.isDirectory()){
+			
+			zipAll(dir.listFiles());
+
+		}else
+			throw new IOException("dir not is a directory");
+	}
+	
+	private void zipAll(File[] files) throws FileNotFoundException, IOException{
+		for (File file : files) {
+			if(file.isDirectory()){
+				zipAll(file.listFiles());
+			}else{
+				addFile(new FileInputStream(file),file.getAbsolutePath());
+			}
+		}
+	}
+	
+	/**
+	 * Compress all files that have been added
+	 * @return the file compressed
+	 * @throws IOException - If a problem I/O occurs
 	 */
 	public File compress() throws IOException{
 		File file = null;
-		if( this.out != null && zipOut != null){
+		if( isOpen() ){
 			zipOut.flush();
-			file = new File(absoluteDirArquivo);
+			file = new File(outputAbsoluteDir);
 		}	
 		return file;
 	}
@@ -103,5 +130,21 @@ public class ZipFileCreator {
 		this.out.close();
 	}
 	
+
+	@Override
+	public void open() throws IOException {
+		this.out = new FileOutputStream(outputAbsoluteDir);
+		this.zipOut = new ZipOutputStream(new BufferedOutputStream(this.out));
+	}
+	/**
+	 * Checks if a open
+	 */
+	public boolean isOpen(){
+		if(this.out == null || this.zipOut == null ){
+			return false;
+		}else{
+			return true;
+		}
+	}
 	
 }

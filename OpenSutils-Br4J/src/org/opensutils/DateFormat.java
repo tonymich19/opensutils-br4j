@@ -267,7 +267,31 @@ public final class DateFormat {
 	 * @return Difference in days 
 	 */
 	public static int differenceInDays(final long miliSeconds1, final long miliSeconds2){;
-	       return (int) ((miliSeconds2 - miliSeconds1) / (24*60*60*1000));
+	       return (int) (((miliSeconds2 - miliSeconds1)) / (1000*60*60*24));
+	}
+	/**
+	 * Trunc a date. Remove hour, minute,second,millisecond seting to zero.
+	 * @param calendar - calendar to truncate
+	 * @return truncade date
+	 */
+	public static Calendar trunc(Calendar calendar){
+		if(calendar == null){ return null;}
+		Calendar returnCalendar = (Calendar)calendar.clone();
+		returnCalendar.set(Calendar.HOUR_OF_DAY, 0);
+		returnCalendar.set(Calendar.MINUTE, 0);
+		returnCalendar.set(Calendar.SECOND, 0);
+		returnCalendar.set(Calendar.MILLISECOND, 0);
+		return returnCalendar;
+	}
+	/**
+	 * Trunc a date. Remove hour, minute,second,millisecond seting to zero.
+	 * @param date - date to truncate
+	 * @return truncade date
+	 */
+	public static Date trunc(Date date){
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime((Date)date.clone());
+		return trunc(calendar).getTime();
 	}
 	
 

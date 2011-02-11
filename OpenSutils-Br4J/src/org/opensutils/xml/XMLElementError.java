@@ -20,6 +20,9 @@
 
 
 package org.opensutils.xml;
+
+import org.xml.sax.SAXParseException;
+
 /**
  * <code>ElementError</code> is a class to represent an error that occurred during validation of an xml
  * @author Felipe
@@ -29,14 +32,21 @@ public class XMLElementError {
 	private int row;
 	private int column;
 	private String error;
-	
+	private SAXParseException origin;
+
 	public XMLElementError( int row,
-							int column, 
-							String error) {
+			int column, 
+			String error){
 		this.row = row;
 		this.column = column;
 		this.error = error;
 	}
+			
+	public XMLElementError( SAXParseException origin) {
+		this(origin.getLineNumber() , origin.getColumnNumber(),origin.getMessage());
+		this.origin = origin;
+	}
+	
 	/**
 	 * Get the line number that is in error
 	 * @return
@@ -79,6 +89,18 @@ public class XMLElementError {
 	 */
 	public void setColumn(int column) {
 		this.column = column;
+	}
+	/**
+	 * @return the origin
+	 */
+	public SAXParseException getOrigin() {
+		return origin;
+	}
+	/**
+	 * @param origin the origin to set
+	 */
+	public void setOrigin(SAXParseException origin) {
+		this.origin = origin;
 	}
 	
 }

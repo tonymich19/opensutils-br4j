@@ -29,7 +29,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestReflectUtils {
+public class ReflectUtilsTest {
 
 	@Before
 	public void setUp() throws Exception {
@@ -37,8 +37,8 @@ public class TestReflectUtils {
 
 	@Test
 	public void testGenerateNameGetClass(){
-		assertTrue( "Result incorrect. Name of class incorrect", ReflectUtils.generateNameGetClass(MockClass.class).equals("mockClass"));
-		assertTrue( "Result incorrect. Name of class incorrect", ReflectUtils.generateNameGetClass(TestReflectUtils.class).equals("testReflectUtils"));
+		assertTrue( "Result incorrect. Name of class incorrect", ReflectUtils.generateNameGetClass(MockClasse.class).equals("mockClasse"));
+		assertTrue( "Result incorrect. Name of class incorrect", ReflectUtils.generateNameGetClass(ReflectUtilsTest.class).equals("reflectUtilsTest"));
 	}
 	
 	@Test
@@ -48,7 +48,7 @@ public class TestReflectUtils {
 		assertTrue( "Result incorrect. Incorrect Name of get method", ReflectUtils.generateNameGetMethod("myMethodTestJUni").equals("getMyMethodTestJUni"));
 
 		try {
-			MockClass mockClass = new MockClass();
+			MockClasse mockClass = new MockClasse();
 			assertTrue( "Result incorrect. Incorrect Name of get method", ReflectUtils.generateNameGetMethod(mockClass.getClass().getField("fieldNotGetMethod")).equals("getFieldNotGetMethod"));
 			assertTrue( "Result incorrect. Incorrect Name of get method", ReflectUtils.generateNameGetMethod(mockClass.getClass().getField("numberFloat")).equals("getNumberFloat"));
 		} catch (Exception e) {
@@ -64,7 +64,7 @@ public class TestReflectUtils {
 		assertTrue( "Result incorrect. Incorrect Name of set method", ReflectUtils.generateNameSetMethod("myMethodTestJUni").equals("setMyMethodTestJUni"));
 		
 		try {
-			MockClass mockClass = new MockClass();
+			MockClasse mockClass = new MockClasse();
 			assertTrue( "Result incorrect. Incorrect Name of set method", ReflectUtils.generateNameSetMethod(mockClass.getClass().getField("fieldNotGetMethod")).equals("setFieldNotGetMethod"));
 			assertTrue( "Result incorrect. Incorrect Name of set method", ReflectUtils.generateNameSetMethod(mockClass.getClass().getField("numberFloat")).equals("setNumberFloat"));
 		} catch (Exception e) {
@@ -75,7 +75,7 @@ public class TestReflectUtils {
 	
 	@Test
 	public void testClone(){
-		MockClass mockClass = new MockClass();
+		MockClasse mockClass = new MockClasse();
 		mockClass.setBoo(true);
 		mockClass.setId(789456123L);
 		mockClass.setName("MockClass JUnit Test");
@@ -83,11 +83,11 @@ public class TestReflectUtils {
 		mockClass.setNumberInteger(74411);
 		mockClass.setNumberShort( new Short((short)1));
 		mockClass.setValue(new BigDecimal(22225));
-		mockClass.setMockClass(new MockClass() );
+		mockClass.setMockClass(new MockClasse() );
 		mockClass.setNameNull(null);
 		mockClass.setFieldNotGetMethod("teste");
 		try {
-			MockClass result = ReflectUtils.clone(MockClass.class, mockClass);
+			MockClasse result = ReflectUtils.clone(MockClasse.class, mockClass);
 			if(result == mockClass){
 				fail("result can not be the same instance that MockClass");
 			}
@@ -114,15 +114,15 @@ public class TestReflectUtils {
 
 	@Test
 	public void testToString(){
-		MockClass mockClass = new MockClass();
+		MockClasse mockClass = new MockClasse();
 		mockClass.setBoo(true);
 		mockClass.setId(789456123L);
-		mockClass.setName("MockClass JUnit Test");
+		mockClass.setName("MockClasse JUnit Test");
 		mockClass.setNumberFloat(new Float(2));
 		mockClass.setNumberInteger(74411);
 		mockClass.setNumberShort( new Short((short)1));
 		mockClass.setValue(new BigDecimal(22225));
-		mockClass.setMockClass(new MockClass() );
+		mockClass.setMockClass(new MockClasse() );
 		mockClass.setNameNull(null);
 		mockClass.setFieldNotGetMethod("teste");
 		
@@ -130,12 +130,12 @@ public class TestReflectUtils {
 		//System.out.println(resp);
 		//System.out.println(mockClass.toString());
 		assertTrue( "result incorrect. " , 
-					resp.equals("MockClass [id=789456123, name=MockClass JUnit Test, nameNull=null, value=22225, numberShort=1, numberInteger=74411, numberFloat=2.0, boo=true, mockClass=MockClass [id=0, name=null, nameNull=it a value, not null., value=null, numberShort=0, numberInteger=null, numberFloat=null, boo=false, mockClass=null, fieldNotGetMethod=null], fieldNotGetMethod=teste]")
+					resp.equals("MockClasse [id=789456123, name=MockClasse JUnit Test, nameNull=null, value=22225, numberShort=1, numberInteger=74411, numberFloat=2.0, boo=true, mockClass=MockClasse [id=0, name=null, nameNull=it a value, not null., value=null, numberShort=0, numberInteger=null, numberFloat=null, boo=false, mockClass=null, fieldNotGetMethod=null], fieldNotGetMethod=teste]")
 				  );
 		
 		resp = ReflectUtils.toString(mockClass, false);
 		assertTrue( "result incorrect. " , 
-					resp.equals("MockClass [id=789456123, name=MockClass JUnit Test, nameNull=null, value=22225, numberShort=1, numberInteger=74411, numberFloat=2.0, boo=true, fieldNotGetMethod=teste]")
+					resp.equals("MockClasse [id=789456123, name=MockClasse JUnit Test, nameNull=null, value=22225, numberShort=1, numberInteger=74411, numberFloat=2.0, boo=true, fieldNotGetMethod=teste]")
 			  	   );
 		//System.out.println(resp);
 		//System.out.println(mockClass.toString());
@@ -143,12 +143,29 @@ public class TestReflectUtils {
 	}
 	
 	@Test
+	public void testGetValuesInCollection(){
+		List<MockClasse> list = new ArrayList<MockClasse>();
+		list.add( new MockClasse("open"));
+		list.add( new MockClasse("sutils"));
+		list.add( new MockClasse("br"));
+		list.add( new MockClasse("4J"));
+		
+		List<Object> resultList = ReflectUtils.getValuesInCollection(list,"name");
+		
+		assertTrue( "result incorrect. " , ((String) resultList.get(0)).equals("open") );
+		assertTrue( "result incorrect. " , ((String) resultList.get(1)).equals("sutils") );
+		assertTrue( "result incorrect. " , ((String) resultList.get(2)).equals("br") );
+		assertTrue( "result incorrect. " , ((String) resultList.get(3)).equals("4J") );
+		
+	}
+	
+	@Test
 	public void testToGetIdsCollection(){
-		List<MockClass> list = new ArrayList<MockClass>();
-		list.add( new MockClass(1L));
-		list.add( new MockClass(2L));
-		list.add( new MockClass(3L));
-		list.add( new MockClass(4L));
+		List<MockClasse> list = new ArrayList<MockClasse>();
+		list.add( new MockClasse(1L));
+		list.add( new MockClasse(2L));
+		list.add( new MockClasse(3L));
+		list.add( new MockClasse(4L));
 		
 		List<Object> resultList = ReflectUtils.getIdsFieldInCollection(list);
 		
@@ -179,11 +196,14 @@ public class TestReflectUtils {
 		assertTrue( "wrapper primitive, result incorrect. ",ReflectUtils.isWrapperPrimitive("teste" ));
 		assertTrue( "wrapper primitive, result incorrect. ",ReflectUtils.isWrapperPrimitive((float)1.2) );
 	}
-
 	
+
+	public void testEmptyContructor(){
+		fail("Não implementado");
+	}
 }
 
-class MockClass{
+class MockClasse{
 	private long id;
 	private String name;
 	private String nameNull = "it a value, not null.";
@@ -192,13 +212,16 @@ class MockClass{
 	private Integer numberInteger;
 	public Float numberFloat;
 	protected boolean boo;
-	private MockClass mockClass;
+	private MockClasse mockClass;
 	public String fieldNotGetMethod;
 
-	public MockClass(){
+	public MockClasse(){
 	}
-	public MockClass(long id){
+	public MockClasse(long id){
 		this.id = id;
+	}
+	public MockClasse(String name){
+		this.name = name;
 	}
 	
 	public long getId() {
@@ -247,11 +270,11 @@ class MockClass{
 		return boo;
 	}
 
-	public MockClass getMockClass() {
+	public MockClasse getMockClass() {
 		return mockClass;
 	}
 
-	public void setMockClass(MockClass mockClass) {
+	public void setMockClass(MockClasse mockClass) {
 		this.mockClass = mockClass;
 	}
 

@@ -1,5 +1,5 @@
 /*
- * 	@(#)CpfCnpjUtils.java	1.2 10/11/22
+ * 	@(#)CpfCnpjUtils.java	1.2 2010/11/22
  *	Copyright (c) 2010 Felipe Priuli
  *
  *	This file is part of OpenSutils-Br4J.
@@ -15,8 +15,7 @@
  *
  *	You should have received a copy of the GNU Lesser General Public License
  *	along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
- */
-
+*/
 package org.opensutils;
 
 import java.util.regex.Matcher;

@@ -1,5 +1,5 @@
 /*
- * 	 @(#)ReflectUtils.java	0.2 10/11/22
+ * 	 @(#)ReflectUtils.java	0.6 11/02/08
  * 
  *	Copyright (c) 2010 Felipe Priuli
  *
@@ -23,8 +23,6 @@ package org.opensutils.reflect;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -35,13 +33,11 @@ import java.util.List;
  * <code>ReflectUtils</code> is class is to abstract the creation of complex reflection.
  * It is a utility class for get information of objects using reflection.
  * @author Felipe Priuli
- * @version 0.4
+ * @version 0.6
  *
  */
-public class ReflectUtils {
+public final class ReflectUtils {
 
-	
-	@SuppressWarnings(value={"unchecked","rawtypes"})
 	/**
 	 * Copies information from one object to another new object by cloning the
 	 * public fields and private fields that have protected or gets and sets
@@ -50,68 +46,38 @@ public class ReflectUtils {
 	 * @return new cloned object
 	 * @throws InstantiationException, SecurityException
 	 */
+	@SuppressWarnings("unchecked")
 	public static <T> T clone(	Class<T> entityClass,
 								final T obj
 							  ) throws InstantiationException, SecurityException{
 		
 		try{
-			
-			Constructor[] construtores = Class.forName(entityClass.getName()).getConstructors();
-			Constructor constructor = null;
-			for (Constructor c : construtores) {
-				if(c.getParameterTypes().length == 0){
-					constructor = c;
-					break;
-				}
-			}
+
+			Constructor constructor = getEmptyContructor(entityClass);
 			if(constructor == null)
 				throw new InstantiationException("No default contructor for class '"+entityClass.getName()+"'");
 
 			T objClone = (T) constructor.newInstance(new Object[0]);
 			Field[] fields = objClone.getClass().getDeclaredFields();
-			for (Field field : fields) {
-				try{
-					if(Modifier.isPublic(field.getModifiers())){
-						field.set(objClone, obj.getClass().getField(field.getName()).get(obj) );
-						
-					}else{
-						Method getMethod = obj.getClass().getMethod(	generateNameGetMethod(field.getName()),
-																		new Class[0] );
-						if(Modifier.isPublic(getMethod.getModifiers())){
-							Object result = getMethod.invoke(obj, new Object[0]);
-	
-							Method setMethod = objClone.getClass().getMethod(	generateNameSetMethod(field.getName()),
-																				field.getType() );
-	
-							setMethod.invoke(objClone, new Object[]{result});
-						}
-					}
-					
-				}catch(NoSuchMethodException nsmE){}//Method not found(no java beans field)
-				catch(IllegalArgumentException ilaE){}
-				catch(InvocationTargetException ivTE){}
-				catch( IllegalAccessException illegalAcess){} 
-				catch (NoSuchFieldException e) {}
-				catch(SecurityException se){}
+			
+			for (Field field : fields) {					
+				ReflectField.setValue(objClone, field, ReflectField.getValue(obj, field.getName(), null));
 			}
 
 			return objClone;
 
-		}catch(ClassNotFoundException cnfE){//ignoring. no give this exception
-			throw new InstantiationException("Class not found. "+cnfE.getMessage());
 		}catch( IllegalAccessException illegalAcess){
 			throw new InstantiationException(illegalAcess.getMessage());
 		}catch(InvocationTargetException ivTE){
 			throw new InstantiationException(ivTE.getMessage());
 		}
 	}
-	
-	@SuppressWarnings("rawtypes")
+
 	/**
 	 * Generates the name of a class
 	 * @return string of get class
 	 */
-	public static String generateNameGetClass(Class c){
+	public static String generateNameGetClass(Class<?> c){
 		String className = c.getSimpleName();
 		return className.substring(0,1).toLowerCase() + className.substring(1); 
 	}
@@ -154,8 +120,7 @@ public class ReflectUtils {
 	public static String toString(final Object obj, boolean recursive){
 		return toString(obj, recursive, false);
 	}
-	
-	@SuppressWarnings("rawtypes")
+
 	/**
 	 * Scans the visible fields from object and returns the values and field names in a string<br>
 	 * This method not use set method os a obj.
@@ -171,26 +136,19 @@ public class ReflectUtils {
 		StringBuilder resultToString = new StringBuilder();
 		
 		try {
-			Class cls = obj.getClass();  					         
+			Class<?> cls = obj.getClass();  					         
 	        Field fieldlist[] = cls.getDeclaredFields();
 	        resultToString.append(obj.getClass().getSimpleName()+ " [");    
 	        for (int i = 0; i < fieldlist.length; i++) {  
 	            Field fld = fieldlist[i];
 
 	            try{
-	            	Object resultMethod = null;
-	            	if(Modifier.isPublic(fld.getModifiers())){
-	            		resultMethod = obj.getClass().getField(fld.getName()).get(obj) ;
-
-	            	}else{
-	            		Method getMethod = obj.getClass().getMethod(generateNameGetMethod(fld.getName()),new Class[0] );	            
-	            		resultMethod = getMethod.invoke(obj, new Object[0]);
-	            	}
-
-	            	if (resultMethod instanceof java.util.Collection && !ignoreCollection){
+	            	Object resultMethod = ReflectField.getValue(obj, fld.getName(), null);
+	            	
+	            	if (resultMethod instanceof java.util.Collection<?> && !ignoreCollection){
 	            		resultToString.append( fld.getName() +igual+"[");
-	            		if(!((Collection)resultMethod).isEmpty()){
-		            		for(Object objColl :(Collection)resultMethod){
+	            		if(!((Collection<?>)resultMethod).isEmpty()){
+		            		for(Object objColl :(Collection<?>)resultMethod){
 		            			resultToString.append(toString(objColl,false,ignoreCollection)+",");
 		            		}
 		            		resultToString.replace(resultToString.length()-1, resultToString.length(), "");
@@ -205,8 +163,7 @@ public class ReflectUtils {
 	            		resultToString.append( toString(resultMethod, true, ignoreCollection) + (i == fieldlist.length ? "" : separador));
 	            	}
 
-	            }catch(NoSuchMethodException nsmE){}//Method not found(no java beans field)
-	            catch(Exception e){}
+	            }catch(Exception e){}
 	        }  	    
 		}catch (Throwable e) {  
             System.err.println(e);  
@@ -215,40 +172,60 @@ public class ReflectUtils {
         return resultToString.toString().replace(", ]", "]");		
 	}
 
-	@SuppressWarnings("rawtypes")
 	/**
 	 * Traverses the list and get all the fields named id, ID
 	 * @return List of ids value field.
 	 */
-	public static List<Object> getIdsFieldInCollection(Collection collection){	
+	public static List<Object> getIdsFieldInCollection(Collection<?> collection){
+		return getValuesInCollection(collection, "id");
+	}
+	
+	/**
+	 * Traverses the list and get all the value fields named for 'fieldName'
+	 * @param collection - list to get val
+	 * @param fieldName - the names of field to get a value
+	 * @return List of ids value field.
+	 */
+	public static List<Object> getValuesInCollection(Collection<?> collection, String fieldName){	
 		List<Object> ids = new ArrayList<Object>();
 		try {
 		
-			  Iterator iterator = collection.iterator();
+			  Iterator<?> iterator = collection.iterator();
 		      while (iterator.hasNext()) {
 		    	  Object obj = iterator.next();
-		    	  Class cls = obj.getClass();  					         
+		    	  Class<? extends Object> cls = obj.getClass();  					         
 			      Field fieldlist[] = cls.getDeclaredFields();
 			      
 			      for (int i = 0; i < fieldlist.length; i++) {  
 		            Field fld = fieldlist[i];  
-		            if (fld.getName().equalsIgnoreCase("id")){		
-		            	
-		            	if(Modifier.isPublic(fld.getModifiers())){
-		            		ids.add( obj.getClass().getField(fld.getName()).get(obj)) ;
-		            	}else{
-			            	Method getMethod = obj.getClass().getMethod(generateNameGetMethod(fld.getName()),new Class[0] );
-			            	if(Modifier.isPublic(getMethod.getModifiers()))
-			            		ids.add(getMethod.invoke(obj, new Object[0]));
-		            	}
+		            if (fld.getName().equalsIgnoreCase(fieldName)){		
+		            	ids.add( 	ReflectField.getValue( obj, fld.getName(), null) ) ;
 		            }
 			      }
 		      }
 	      
 		}catch (Throwable t){
-			System.err.println(t);  
 		}
 	     return ids;
+	}
+	
+	@SuppressWarnings("unchecked")
+	/**
+	 * Get the constructor without parameters.
+	 * @return the constructor if Constructor.getParameterTypes().length == 0
+	 */
+	public static Constructor getEmptyContructor(Class _class){
+		Constructor[] construtores = _class.getConstructors();
+	
+		Constructor constructor = null;
+		for (Constructor c : construtores) {
+			if(c.getParameterTypes().length == 0){
+				constructor = c;
+				break;
+			}
+		}
+		return constructor;
+
 	}
 	
 	/**
@@ -271,7 +248,5 @@ public class ReflectUtils {
 		else 
 			return false;
 	}
-
-	
 
 }

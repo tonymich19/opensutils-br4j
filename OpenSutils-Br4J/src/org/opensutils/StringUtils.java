@@ -120,6 +120,54 @@ public final class StringUtils {
 	}
 	
 	/**
+	 * Truncate the value if higher of param 'maxLength' and adds pad on the right side to complete if value minor of 'maxLength'
+	 * <br><i>Add in verion 0.2</i> 
+	 * @param 	value - text to add pad
+	 * @param 	maxLength - total size to value
+	 * @param 	pad - value to add
+	 * @return 	the formated value with pad and trunk
+	 */
+	public static String truncateAndRightPad(	String value,
+												int maxLength, 
+												String pad){
+		
+        if(value != null){
+        	value = value.trim();
+            if(value.length() < maxLength)
+                return StringUtils.rightPad(value, maxLength, pad);
+            else if(value.length() > maxLength)
+                return value.substring(0, maxLength);
+            else
+                return value;
+        }else
+            return StringUtils.rightPad("", maxLength, pad);
+    }
+	
+	/**
+	 * Truncate the value if higher of param 'maxLength' and adds pad on the left side to complete if value minor of 'maxLength'
+	 * <br><i>Add in verion 0.2</i> 
+	 * @param 	value - text to add pad
+	 * @param 	maxLength - total size to value
+	 * @param 	pad - value to add
+	 * @return 	the formated value with pad and trunk
+	 */
+	public static String truncateAndLeftPad(	String value,
+												int maxLength,
+												String pad){
+        if(value != null){
+        	value = value.trim();
+            if(value.length() < maxLength)
+                return StringUtils.leftPad(value, maxLength, pad);
+            else if(value.length() > maxLength)
+                return value.substring(0, maxLength);
+            else
+                return value;
+        }else
+            return StringUtils.leftPad("", maxLength, pad);
+    }
+
+	
+	/**
 	 * Remove acentuation, stress
 	 * @param 	value
 	 * @return	value no acentuation.
@@ -155,6 +203,7 @@ public final class StringUtils {
 	 * @return filename - only simple name file.
 	 */
 	public static String parseNameFile(final String path){
+		if(path == null){ return path;}
 		//remove o diretorio mantendo apenas o nome do arquivo.
 		Matcher matcher = Pattern.compile("(.*\\\\)?(.+)$").matcher(path);
 		if(matcher.find() && path.contains("\\")){
@@ -276,5 +325,45 @@ public final class StringUtils {
 			return null;
 		
 		return value;
+	}
+	
+	/**
+	 * If null value this method retorn a String empty value ("")<br>
+	 * null -> "" <br><i>Add in verion 0.2</i>
+	 * @param value - with or without null value
+	 * @see org.opensutils.nullToEmpty(String, boolean)
+	 * @return value not null.
+	 */
+	public static String nullToEmpty(final String value){
+		if(value == null) 
+			return "";
+		
+		return value;
+	}
+	
+	/**
+	 * If null value this method retorn a String empty value ("")<br>
+	 * null -> ""
+	 * @param value - with or without null value
+	 * @param trim - true = if the value is not null then remove all spaces
+	 * @return value not null.
+	 */
+	public static String nullToEmpty(final String value, boolean trim){
+		if(value == null) {
+			return "";
+		}
+		if(trim){
+			return value.trim();
+		}
+		return value;
+	}
+	
+	/**
+	 * Checks if a String value is a null or empty.
+	 * @param value - the value to checks
+	 * @return true if param1 is empty or null
+	 */
+	public static boolean isNullOrEmpty(final String value){
+		return value == null ? true : value.trim().isEmpty() ? true : false; 
 	}
 }

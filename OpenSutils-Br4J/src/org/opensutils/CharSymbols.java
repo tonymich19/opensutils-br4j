@@ -108,18 +108,6 @@ public class CharSymbols {
 		for(int i = 256; i<= 402; i++)
 			arrSymbols1.add((char)i);
 		
-		
-	/* GENERATED ARRAY	
-	 	int i = 0;
-	 	for(Character c :arrSymbols1){
-			i++;
-			if(i < 8)
-				System.out.print("(char)" +(int)c+",	");
-			else{
-				i=0;
-				System.out.println("(char)" +(int)c+",	");
-			}
-		}*/
 		return arrSymbols1;
 	}
 	
@@ -132,8 +120,4 @@ public class CharSymbols {
 		return StringUtils.remove(value, CharSymbols.LIGHT_SYMBOLS);
 	}
 	
-	/*	for(int i = 0; i < 1000; i++){
-		char c = (char)i;
-		System.out.println(c+" - "+(int)c+",");
-	}*/
 }

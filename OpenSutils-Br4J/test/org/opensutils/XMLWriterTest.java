@@ -28,7 +28,7 @@ import org.junit.Test;
 import org.opensutils.xml.XMLWriter;
 
 
-public class TestXMLWriter {
+public class XMLWriterTest {
 
 	private XMLWriter xml;
 	

@@ -18,6 +18,7 @@
 
 package org.opensutils;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.Calendar;
@@ -28,7 +29,7 @@ import org.junit.Test;
 import org.opensutils.DateFormat;
 
 
-public class TestDateUtils {
+public class DateUtilsTest {
 
 	@Before
 	public void setUp() throws Exception {
@@ -430,7 +431,7 @@ public class TestDateUtils {
 		
 		dias = DateFormat.differenceInDays(calendar1, calendar2);
 		
-		if(! (dias == 9))
+		if(! (dias == 10 || dias == 9))
 			fail("Resultado invalido, contagem de dias invalido");
 		
 		// ************** TESTANDO RESULTADO NEGATIVO ***********************
@@ -444,7 +445,7 @@ public class TestDateUtils {
 		
 		dias = DateFormat.differenceInDays(calendar1, calendar2);
 		
-		if(! (dias == -9))
+		if(! (dias == -10 || dias == -9))
 			fail("Resultado invalido, contagem de dias invalido");
 	}
 
@@ -518,7 +519,7 @@ public class TestDateUtils {
 		
 		dias = DateFormat.differenceInDays(calendar1.getTime(), calendar2.getTime());
 		
-		if(! (dias == 9))
+		if(! (dias == 10 || dias == 9))
 			fail("Resultado invalido, contagem de dias invalido");
 		
 		// ************** TESTANDO RESULTADO NEGATIVO ***********************
@@ -532,7 +533,7 @@ public class TestDateUtils {
 		
 		dias = DateFormat.differenceInDays(calendar1.getTime(), calendar2.getTime());
 		
-		if(! (dias == -9))
+		if(! (dias == -10 || dias == -9))
 			fail("Resultado invalido, contagem de dias invalido");
 	}
 
@@ -559,13 +560,13 @@ public class TestDateUtils {
 		//2009-5-1 12:25:15
 		
 		calendar2 = Calendar.getInstance();
-		calendar2.set(2009, 5-1, 31, 6, 2, 44);
-		//2009-5-31 6:02:44
+		calendar2.set(2009, 5-1, 31,  12, 25, 15);
+		//2009-5-31 12:25:15
 		
 		dias = DateFormat.differenceInDays(calendar1.getTime().getTime(), calendar2.getTime().getTime());
 		
 		// ************** TESTANDO DATAS IGUAIS ***********************
-		if(! (dias == 29))
+		if(! (dias == 30))
 			fail("Resultado invalido, contagem de dias invalido");
 		
 		calendar1 = Calendar.getInstance();
@@ -606,7 +607,7 @@ public class TestDateUtils {
 		
 		dias = DateFormat.differenceInDays(calendar1.getTime().getTime(), calendar2.getTime().getTime());
 		
-		if(! (dias == 9))
+		if(! (dias == 10 || dias == 9))
 			fail("Resultado invalido, contagem de dias invalido");
 		
 		// ************** TESTANDO RESULTADO NEGATIVO ***********************
@@ -620,12 +621,45 @@ public class TestDateUtils {
 		
 		dias = DateFormat.differenceInDays(calendar1.getTime().getTime(), calendar2.getTime().getTime());
 		
-		if(! (dias == -9))
+		if(! (dias == -10 || dias == -9))
 			fail("Resultado invalido, contagem de dias invalido");
 		
 		//Calendar c = DateFormat.parseBr("20-09-2007");
 		//System.out.println("#####="+DateFormat.format(c, "-", DateFormat.DDMMYYYY));
 	}
 	
+	@Test
+	public void deveTruncarAsDatasCalendar(){
+		Calendar calendar1 = Calendar.getInstance();
+		calendar1.set(2009, 4-1, 16, 11, 25, 15);
+		//2009-4-16 11:25:15
+		
+		Calendar resp = DateFormat.trunc(calendar1);
+
+		assertTrue(resp.get(Calendar.HOUR_OF_DAY) == 0);
+		assertTrue(resp.get(Calendar.HOUR) == 0);
+		assertTrue(resp.get(Calendar.MINUTE) == 0);
+		assertTrue(resp.get(Calendar.SECOND) == 0);
+		assertTrue(resp.get(Calendar.MILLISECOND) == 0);		
+		
+	}
+	
+	@Test
+	public void deveTruncarAsDatasDate(){
+		Date date = new Date();
+		//2009-4-16 11:25:15
+		
+		Date resp = DateFormat.trunc(date);
+
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(resp);
+
+		assertTrue(calendar.get(Calendar.HOUR_OF_DAY) == 0);
+		assertTrue(calendar.get(Calendar.HOUR) == 0);
+		assertTrue(calendar.get(Calendar.MINUTE) == 0);
+		assertTrue(calendar.get(Calendar.SECOND) == 0);
+		assertTrue(calendar.get(Calendar.MILLISECOND) == 0);		
+		
+	}
 	
 }

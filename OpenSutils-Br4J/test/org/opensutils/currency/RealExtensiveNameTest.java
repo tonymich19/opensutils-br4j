@@ -27,7 +27,7 @@ import org.junit.Test;
 import org.opensutils.currency.RealExtensiveName;
 
 
-public class TestRealExtensiveName {
+public class RealExtensiveNameTest {
 
 	@Before
 	public void setUp() throws Exception {

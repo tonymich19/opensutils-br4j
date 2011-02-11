@@ -25,7 +25,7 @@ import org.junit.Test;
 import org.opensutils.security.Cryptography;
 
 
-public class TestCryptography {
+public class CryptographyTest {
 
 	@Before
 	public void setUp() throws Exception {

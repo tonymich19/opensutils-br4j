@@ -36,15 +36,15 @@ public class XMLErrorHandler implements ErrorHandler {
 	}
 	
     public void error(SAXParseException sxpE) {
-    	this.listErro.add( new XMLElementError(sxpE.getLineNumber() , sxpE.getColumnNumber(),sxpE.getMessage() ));
+    	this.listErro.add( new XMLElementError(sxpE));
     }
          
     public void fatalError(SAXParseException sxpE) {
-    	this.listErro.add( new XMLElementError(sxpE.getLineNumber() , sxpE.getColumnNumber(),sxpE.getMessage() ));
+    	this.listErro.add( new XMLElementError(sxpE));
     }
          
     public void warning(SAXParseException sxpE) {
-    	this.listErro.add( new XMLElementError(sxpE.getLineNumber() , sxpE.getColumnNumber(),sxpE.getMessage() ));
+    	this.listErro.add( new XMLElementError(sxpE ));
     }
 
 	public List<XMLElementError> getErros() {

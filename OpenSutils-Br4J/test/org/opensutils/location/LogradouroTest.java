@@ -26,7 +26,7 @@ import org.junit.Test;
 import org.opensutils.location.Logradouro;
 
 
-public class TestLogradouro {
+public class LogradouroTest {
 
 	@Before
 	public void setUp() throws Exception {
