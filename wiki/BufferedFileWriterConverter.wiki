@@ -1,0 +1,254 @@
+#summary Class BufferedFileWriter do OpenSutils-Br4J
+#labels Buffer,File,writer,converter,layout,IO,ES
+
+BufferedFileWriterConverter
+
+Esta classe implementa a interface org.opensutils.io.FileWriter e org.opensutils.io.FileWriterConverter e oferece métodos para facilitar a escrita de objetos java em arquivos no formato texto.
+Esta classe utiliza um Buffer para aumentar a performance de gravação e e filha de BufferedFileWriter.
+Adicionado na versão 0.2
+
+== Detalhes ==
+
+Os métodos disponíveis nesta classe são:
+
+<ul>
+<li>getLineConverter()</li>
+<li>setLineConverter(LineConverter)</li>
+<li>writer(Object)</li>
+<li>writer(String[])</li>
+<li>breakLine()</li>
+<li>clean()</li>
+<li>close()</li>
+<li>flush()</li>
+<li>getFile()</li>
+<li>isFlushAll()</li>
+<li>isOpen()</li>
+<li>open()</li>
+<li>setFile(File)</li>
+<li>setFile(String)</li>
+<li>setFlushAll(boolean)</li>
+<li>write(String)</li>
+<li>writeLine(String)</li>
+</ul>
+
+== Usando o BufferedFileWriterConverter  ==
+{{{
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import org.opensutils.converter.C3POLineConverter;
+import org.opensutils.converter.ConverterUtils;
+import org.opensutils.converter.layout.FieldLayout;
+import org.opensutils.converter.layout.Layout;
+import org.opensutils.converter.layout.FieldLayout.TypePad;
+
+public class BufferedFileWriterConvertIntegrationTest {
+
+	public static void main(String[] args) {
+		try{
+			C3POLineConverter c = new C3POLineConverter(buildLayout());	
+			FileWriterConverter writer = new org.opensutils.io.BufferedFileWriterConverter(new File("c:\\testObjectWriter.txt"), c);
+			writer.open();
+			
+			writeHeader(writer);//00IHEADERheaderHEADEROTHERXXXXX
+			
+			writeDetail(writer);//1NOME_CLIENTE00001255VALUE000400050001.414/12/2010
+	
+			writer.flush();
+			writer.close();
+			
+		}catch(Exception ioE){
+			System.out.println(ioE.getMessage());
+			ioE.printStackTrace();
+		}
+	}
+	
+	private static void writeDetail(FileWriterConverter writer) throws IOException {
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(2010, (12-1), 14, 0, 0, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+		
+		DetailMock m = new DetailMock(1255L,"NOME_CLIENTE",(short)1.4,(int)40005,"VALUE",calendar.getTime());
+		
+		writer.writer(m);
+	}
+	
+	private static void writeHeader(FileWriterConverter writer) throws IOException {
+		
+		HeaderMock header = new HeaderMock("       HEADERheaderHEADER   "," OTHER ");
+		writer.writer(header);
+	}
+
+	private static List<Layout> buildLayout() {
+		List<Layout> layout = new ArrayList<Layout>(8);
+		layout.add( new Layout(0,1,"1", DetailMock.class));//Initial 1 use this layout
+		layout.get(0).getFields().add(new FieldLayout(1,13,"name"," ",ConverterUtils.buildConvertString()));
+		layout.get(0).getFields().add(new FieldLayout(13,21,"id","0",ConverterUtils.buildConvertLong()));
+		layout.get(0).getFields().add(new FieldLayout(21,26,"nameNull"," ",ConverterUtils.buildConvertString()));
+		layout.get(0).getFields().add(new FieldLayout(34,40,"numberShort","0",ConverterUtils.buildConvertShort()));
+		layout.get(0).getFields().add(new FieldLayout(21,26,"fieldNotGetMethod"," ",ConverterUtils.buildConvertString()));
+		layout.get(0).getFields().add(new FieldLayout(26,34,"numberInteger","0", ConverterUtils.buildConvertInteger()));
+		layout.get(0).getFields().add(new FieldLayout(40,50,"data"," ",ConverterUtils.buildConvertDate(new SimpleDateFormat("dd/MM/yyyy"))));
+		
+		layout.add( new Layout(0,2,"00",HeaderMock.class));//Initial 0 use this layout
+		layout.get(1).getFields().add(new FieldLayout(2,21,"name","I",TypePad.LEFT_PAD,ConverterUtils.buildConvertString()));
+		layout.get(1).getFields().add(new FieldLayout(21,31,"other","X",TypePad.RIGHT_PAD,ConverterUtils.buildConvertString()));
+		
+		return layout;
+	}
+
+}
+@SuppressWarnings("unused")
+class HeaderMock{
+	private String name;
+	private String other;
+	
+	public HeaderMock(String name, String other) {
+		super();
+		this.name = name;
+		this.other = other;
+	}
+}
+@SuppressWarnings("unused")
+class DetailMock{
+	private long id;
+	private String name;
+	private String nameNull = null;
+	private short numberShort;
+	private Integer numberInteger;
+	public String fieldNotGetMethod;
+	public Date data;
+	
+	public DetailMock(long id, String name,short numberShort,
+			Integer numberInteger, String fieldNotGetMethod, Date data) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.numberShort = numberShort;
+		this.numberInteger = numberInteger;
+		this.fieldNotGetMethod = fieldNotGetMethod;
+		this.data = data;
+	}
+}
+}}}
+
+*Informações dos métodos:*
+
+<ul>
+
+<li>
+===write===
+public void writer(String[] array) throws IOException, ConverterException</li>
+
+Este método grava no arquivo um texto convertendo o vetor em uma linha de texto, utiliza um layout(LineConverter.java) para fazer esta conversao.
+
+</li>
+
+<li>
+===write===
+_public void writer(Object object) throws IOException, ConverterException;_
+
+Este método grava no arquivo um texto, convertendo um objeto em uma linha de texto, utiliza um layout(LineConverter.java) para fazer esta conversao.
+
+</li>
+
+
+<li>
+===write===
+_public void writer(Object object) throws IOException, ConverterException;_
+
+Este método grava no arquivo um texto, convertendo um objeto em uma linha de texto, utiliza um layout(LineConverter.java) para fazer esta conversao.
+
+</li>
+
+<li>
+===setLineConverter===
+_public void setLineConverter(LineConverter converter);_
+
+Este método seta o layout que irá converter os objetos java em linha de texto no arquivo
+
+</li>
+
+
+
+<li>
+===write===
+_public void write(String data) throws IOException;_
+
+Este método grava no arquivo um texto, aquele recebido no parâmetro 1 no método ('data')
+
+</li>
+
+<li>
+===writeLine===
+_public void writeLine(String data) throws IOException;_
+
+Este método grava no arquivo um texto, aquele recebido no parâmetro 1 no método ('data') 
+e após gravar, adiciona uma quebra de linha.
+
+
+</li>
+
+<li>
+===breakLine===
+_public void breakLine() throws IOException;_
+
+Este método adiciona uma quebra de linha no arquivo.
+</li>
+
+<li>
+===clean===
+_public void clean();_
+
+Este método libera os recursos utilizados para gravar informações em um arquivo.
+É necessário chamar o método close() antes de invocar este método, para evitar que o arquivo fique aberto no disco.
+
+</li>
+
+<li>
+===close===
+_public void close() throws IOException;_
+
+Este método finaliza e libera o arquivo do uso para gravação
+</li>
+
+<li>
+===flush===
+_public void flush() throws IOException;_
+
+Este método força a liberação de memória e gravação das informações em um arquivo.
+</li>
+
+<li>
+===setFlushAll===
+_public void setFlushAll(boolean flushAll) throws IOException;_
+
+Seta o tipo de flush a ser utilizado, se true após uma chamada do método writer ó método flush() é invocado automaticamente. 
+false para não chamar o método flush() após o writer.
+</li>
+
+
+<li>
+===open===
+_public void open() throws FileNotFoundException ;_
+
+Abre o arquivo para gravação.
+
+</li>
+
+<li>
+===setFile===
+_public void setFile(File file);_
+_public void setFile(String fileName);_
+
+Seta um arquivo, aquele que será utilizado para gravar as informações recebidas pelo método writer.
+
+</li>
+
+
+</ul>
