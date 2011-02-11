@@ -22,6 +22,11 @@ Os métodos disponíveis nesta classe são:
 <li>removeAccentuation(String)</li>
 <li>removeSymbols(String)</li>
 <li>rightPad(String, int, String)</li>
+<li>truncateAndRightPad</li>
+<li>truncateAndLeftPad</li>
+<li>isNullOrEmpty</li>
+<li>nullToEmpty</li>
+
 </ul>
 
 
@@ -122,4 +127,50 @@ Exemplo:
 	//resp equals to: "25252252520000"
 }}}
 </li>
+<li>
+===truncateAndRightPad===
+_public static String truncateAndRightPad(	String value,int maxLength, String pad);_
+
+ADDICIONADO NA VERSÃO 0.2
+Este método formata uma String, truncando caso o 'value' for maior que o tamanho (@param maxLength) ou tambem adiciona (@param pad) do lado direito do primeiro parâmetro (@param value) até preencher o tamanho(@param maxLength)
+Exemplo: 
+{{{
+String value = StringUtils.truncateAndRightPad("VALOR", 12, "X"  );
+//value será igual a "VALORXXXXXXX" como que o tamanho é menor que 12 sera adicionado o caracter 'X' até preencher com 12 posições.
+
+
+value = StringUtils.truncateAndRightPad("   123456789", 5, " "  );
+//value será igual a "12345" , como o tamanho é maior que 5 o value será truncado até 5 posições
+}}}
+</li>
+<li>
+===truncateAndLeftPad===
+_public static String truncateAndLeftPad(	String value,int maxLength, String pad);_
+
+ADDICIONADO NA VERSÃO 0.2
+Este método formata uma String, truncando caso o 'value' for maior que o tamanho (@param maxLength) ou tambem adiciona (@param pad) do lado esquerdo do primeiro parâmetro (@param value) até preencher o tamanho(@param maxLength)
+Exemplo: 
+{{{
+String value = StringUtils.truncateAndLeftPad("VALOR", 12, "X"  );
+//value será igual a "XXXXXXXVALOR" como que o tamanho é menor que 12 sera adicionado o caracter 'X' até preencher com 12 posições do lado esquerdo.
+
+
+value =  StringUtils.truncateAndLeftPad("123456789", 20, "0"  );
+//value será igual a "00000000000123456789" 
+}}}
+</li>
+<li>
+===nullToEmpty===
+_public static String nullToEmpty(final String value)_
+_public static String nullToEmpty(final String value, boolean trim)_
+
+Este método quando receber um valor null ele retorna uma String vazia.
+</li>
+<li>
+===isNullOrEmpty===
+_public static boolean isNullOrEmpty(final String value)_
+
+Este método verifica se um texto é vazio ou nulo. Caso for retorna verdadeiro.
+</li>
+
 </ul>
