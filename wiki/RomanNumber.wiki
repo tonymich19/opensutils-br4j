@@ -1,0 +1,59 @@
+#summary Class RomanNumber do OpenSutils-Br4J
+#labels Featured,Phase-Implementation,Roman,number,convert
+
+RomanNumber
+
+Está classe oferece métodos para converter numeros inteiros em numeros romanos.
+Adicionado na versão 0.2
+
+== Detalhes ==
+
+Os métodos disponíveis nesta classe são:
+
+<ul>
+<li>format(int)</li>
+<li>parse(String)</li>
+<li>isValid(String)</li>
+</ul>
+
+*Informações dos métodos:*
+
+<ul>
+<li>
+===format===
+_public static String format(final int _decimal);_
+
+Este método formata um numero inteiro na base decimal para uma String representando o valor em numero romano.
+Exemplo:
+{{{
+	RomanNumber.format(18).equals("XVIII")//is true
+
+}}}
+
+</li>
+<li>
+===parse===
+_public static int parse(String romanNumber);_
+
+Este método converte um numero romano em um numero inteiro.
+Exemplo:
+{{{
+	RomanNumber.parse("LIV")== 54//is true
+
+}}}
+</li>
+
+<li>
+===isValid===
+_public static boolean isValid(final String romanNumber);_
+
+Este método verifica se uma String está no formato de numero romano.
+Exemplo:
+{{{
+	 RomanNumber.isValid("XIV") //is true
+	 RomanNumber.isValid("x") //is faLse
+
+}}}
+</li>
+
+</ul>
