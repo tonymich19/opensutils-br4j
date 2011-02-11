@@ -1,5 +1,5 @@
 #summary Class DateFormat do OpenSutils-Br4J
-#labels DateFormat,Featured,Util,Calendar,Date,Java,DateParse,DateConverter,FormatarData
+#labels DateFormat,Featured,Util,Calendar,Date,Java,DateParse,DateConverter,FormatarData,Time,TimeStamp
 
 =DateFormat=
 
@@ -13,6 +13,7 @@ Os métodos disponíveis nesta classe são:
 
 <ul>
 <li>differenceInDays</li>
+<li>trunc</li>
 <li>format</li>
 <li>formatTime</li>
 <li>parse</li>
@@ -91,4 +92,22 @@ DAY_OF_WEEK_IN_MONTH=3,AM_PM=1,HOUR=5,HOUR_OF_DAY=10,MINUTE=15,SECOND=25,
 MILLISECOND=828,ZONE_OFFSET=-10800000,DST_OFFSET=0]
 }}}*/
 </li>
+
+<li>
+===trunc===
+_public static Date trunc(Date date);_
+
+Este método trunca os campos de uma data, deixando apenas o dia, mes e ano removendo os segundos,minutos, horas e milisegundos
+
+Exemplo:
+{{{
+		
+	Date resp = DateFormat.trunc( new Date() );
+	System.out.println(resp);
+	//No console printa a data sem as horas,minutos,segundo e milisegundos
+	//Wed Feb 09 00:00:00 GMT-03:00 2011
+
+}}}
+</li>
+
 </ul>
