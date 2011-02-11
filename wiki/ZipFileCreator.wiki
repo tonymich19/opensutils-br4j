@@ -13,16 +13,31 @@ Os métodos disponíveis nesta classe são:
 <li>addFile(FileInputStream, String)</li>
 <li>close()</li>
 <li>compress()</li>
+<li>addDirectory(File dir) - _(ADICIONADO NA VERSÃO 0.2)_</li>
 </ul>
 
-*Informações dos métodos:*
+== Exemplo de uso ==
+{{{
 
+	ZipFileCreator zip = new ZipFileCreator();
+	
+	zip.addDirectory(new File("C:\\teste"));//adicionando o diretorio para dentro do zip.
+	
+	zip.addFile(new FileInputStream(new File("c:\\meuArquivo.txt")),"MeuArquivo.txt");//Adicionando um arquivo e alterando o nome no zip
+	
+	zip.compress();
+	zip.close();
+
+}}}
+
+
+*Informações dos métodos:*
 <ul>
 <li>
-===compress===
+===addFile===
 _public void addFile(FileInputStream in, String fileName);_
 
-Este método adiciona varios arquivos para serem compactados no formato zip
+Este método adiciona um arquivo para ser compactado dentro do zip.
 Exemplo:
 {{{
 	FileInputStream in = this.getFileInput();
@@ -34,17 +49,32 @@ Exemplo:
 }}}
 
 </li>
+
+<li>
+===addDirectory===
+_public void addDirectory(File dir) throws IOException_
+Este método adiciona um diretorio e todos os diretorios dentro do diretorio para ser compactado dentro do zip
+Exemplo:
+{{{
+	ZipFileCreator zip = new ZipFileCreator("C:\\dirZip.zip");
+	zip.addDirectory(new File("C:\\teste"));//adicionando o diretorio para dentro do zip.
+	zip.compress();//compactando
+	zip.close();//encerrando compactação.
+
+}}}
+
 <li>
 ===compress===
 _public File compress();_
 
 Este método compacta todos os arquivos que foram adicionado na classe.
 </li>
-
+<li>
 ===close===
 _public void close();_
 
 Este método finaliza todos os arquivos manipulados pela classe.
 </li>
+
 
 </ul>
