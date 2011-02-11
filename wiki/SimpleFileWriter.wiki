@@ -1,0 +1,113 @@
+#summary Class SimpleFileWriter do OpenSutils-Br4J
+#labels Featured,Phase-Implementation,File,Writer,IO,ES
+
+SimpleFileWriter
+
+O SimpleFileWriter implementa a interface org.opensutils.io.FileWriter que oferece métodos para facilitar a escrita de informações 
+em arquivos no formato texto. Esta classe não utiliza Buffer para escrever as informações em um Arquivo.
+Adicionado na versão 0.2
+
+== Detalhes ==
+
+Os métodos disponíveis nesta classe são:
+
+<ul>
+<li>breakLine()</li>
+<li>clean()</li>
+<li>close()</li>
+<li>flush()</li>
+<li>getFile()</li>
+<li>isOpen()</li>
+<li>open()</li>
+<li>setFile(File)</li>
+<li>setFile(String)</li>
+<li>write(String)</li>
+<li>writeLine(String)</li>
+</ul>
+
+== EXEMPLO ==
+{{{
+	try{
+		 org.opensutils.io.FileWriter writer = new org.opensutils.io.SimpleFileWriter(new File("c:\\arquivo.txt"));
+		 writer.open();//INICIA O PROCESSO DE GRAVAÇÃO
+		 writer.writeLine("teste 1");//GRAVA O TEXTO 'teste 1' no arquivo
+		 writer.writeLine("teste 2");//GRAVA O TEXTO 'teste 2' no arquivo
+		 writer.writeLine("teste 3");//GRAVA O TEXTO 'teste 3' no arquivo
+		 writer.close();//FINALIZA
+	}catch(IOException ioE){
+		ioE.printStackTrace();
+	}
+}}}
+
+*Informações dos métodos:*
+
+<ul>
+
+<li>
+===write===
+_public void write(String data) throws IOException;_
+
+Este método grava no arquivo um texto, aquele recebido no parâmetro 1 no método ('data')
+
+</li>
+
+<li>
+===writeLine===
+_public void writeLine(String data) throws IOException;_
+
+Este método grava no arquivo um texto, aquele recebido no parâmetro 1 no método ('data') 
+e após gravar, adiciona uma quebra de linha.
+
+
+</li>
+
+<li>
+===breakLine===
+_public void breakLine() throws IOException;_
+
+Este método adiciona uma quebra de linha no arquivo.
+</li>
+
+<li>
+===clean===
+_public void clean();_
+
+Este método libera os recursos utilizados para gravar informações em um arquivo.
+É necessário chamar o método close() antes de invocar este método, para evitar que o arquivo fique aberto no disco.
+
+</li>
+
+<li>
+===close===
+_public void close() throws IOException;_
+
+Este método finaliza e libera o arquivo do uso para gravação
+</li>
+
+<li>
+===flush===
+_public void flush() throws IOException;_
+
+Este método força a liberação de memória e gravação das informações em um arquivo.
+</li>
+
+
+<li>
+===open===
+_public void open() throws FileNotFoundException ;_
+
+Abre o arquivo para gravação.
+
+</li>
+
+<li>
+===setFile===
+_public void setFile(File file);_
+_public void setFile(String fileName);_
+
+Seta um arquivo, aquele que será utilizado para gravar as informações recebidas pelo método writer.
+
+</li>
+
+
+</ul>
