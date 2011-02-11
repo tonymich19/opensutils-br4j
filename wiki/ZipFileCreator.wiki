@@ -62,7 +62,7 @@ Exemplo:
 	zip.close();//encerrando compactação.
 
 }}}
-
+</li>
 <li>
 ===compress===
 _public File compress();_
