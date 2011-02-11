@@ -35,6 +35,70 @@ _public static Document validateXML(String xmlSource, String urlSchema);_
 Este método verifica se um xml está valido, esta seguindo todas as regras, de um XSD Schema, caso não seja valida lança uma exception chamada XMLException,
 se não existir erros retorna um org.w3c.dom.Document
 
+{{{
+try {
+	StringBuffer xml = new StringBuffer();
+	xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
+	xml.append("<resultSet xmlns=\"file:///c:/OpenSutilsBr4J\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"file:///c:/OpenSutilsBr4J schemaValidatorTest.xsd\"> ");
+	xml.append("<detail>"+System.getProperty("line.separator"));
+	xml.append("<ddd>11</ddd>"+System.getProperty("line.separator"));
+	xml.append("<phone>31565700</phone>"+System.getProperty("line.separator"));
+	xml.append("<person>Felipe</person>"+System.getProperty("line.separator"));
+	xml.append("<number>0</number>"+System.getProperty("line.separator"));				
+	xml.append("<code>SP</code>"+System.getProperty("line.separator"));			
+	xml.append("</detail>"+System.getProperty("line.separator"));
+	xml.append("</resultSet>"+System.getProperty("line.separator"));
+
+	 XMLUtils.validateXML(xml.toString(),"file:///c:/OpenSutilsBr4J/schemaValidatorTest.xsd");
+} catch (XMLException e) {
+	for(XMLElementError error : e.getListErro())
+		System.out.println("Line: "+error.getRow() + " Columns: "+error.getColumn() +" Error:" +error.getError());
+}
+}}}
+Arquivo XSD Schema(c:/OpenSutilsBr4J/schemaValidatorTest.xsd) :
+{{{
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="file:///c:/OpenSutilsBr4J" xmlns="file:///c:/OpenSutilsBr4J" elementFormDefault="qualified">
+	<xs:annotation>
+		<xs:documentation>schemaValidatorTest.xsd	0.1	08/01/2011</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="dddType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([0-9]{3}|[0-9]{2}|[0-9]{1})" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="phoneType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([0-9]{8}|[0-9]{7})" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name = "numberType">
+		<xs:restriction base="xs:integer">
+			 <xs:minInclusive value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="codeType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="2" />
+		</xs:restriction>
+	</xs:simpleType>	
+	<xs:complexType name="detailType">
+		<xs:sequence>
+			<xs:element name="ddd" type="dddType"/>
+			<xs:element name="phone" type="phoneType"/>
+			<xs:element name="person" type="xs:string"/>
+			<xs:element name="number" type="numberType"/>
+			<xs:element name="code" type="codeType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="resultSetType">
+		<xs:choice>
+			<xs:element name="detail" type="detailType" minOccurs="0" maxOccurs="unbounded" />
+		</xs:choice>
+	</xs:complexType>
+	<xs:element name="resultSet" type="resultSetType" />
+</xs:schema>
+}}}
 </li>
 
 </ul>
