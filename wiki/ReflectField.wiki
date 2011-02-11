@@ -1,0 +1,97 @@
+#summary Class ReflectField do OpenSutils-Br4J
+#labels Featured,Phase-Implementation,Reflection,reflect,field,method
+
+ReflectField
+
+Esta classe permite obter ou setar valores atraves do java reflection em Fields (Campos) de uma classe de maneira simplificada.
+Adicionado na versão 0.2
+
+== Detalhes ==
+
+Os métodos disponíveis nesta classe são:
+
+<ul>
+<li>getValue(Object, Field, Converter)</li>
+<li>getValue(Object, String, Converter)</li>
+<li>setValue(Object, Field, Object)</li>
+<li>setValue(Object, String, Object)</li>
+</ul>
+
+*Informações dos métodos:*
+
+<ul>
+<li>
+===getValue===
+_public static Object getValue(Object parentField, String fieldName, org.opensutils.converter.Converter converter)_
+_public static Object getValue(Object parentField, java.lang.reflect.Field field, org.opensutils.converter.Converter converter)_
+
+Este metodo permite obter um valor de um atributo(Field), seja ele private, public, protected, default, o acesso ao campo é modificado por um momento caso o mesmo não for 'public', para obter o valor do campo.
+O Converter do OpenSutils é opcional e é utilizado para converter o resultado se necessario.
+
+Exemplo:
+{{{
+public class TesteReflectField{
+
+	static class Car{
+		private String model = "ford";
+		private int number = 222 ;
+		public Engine engine = new Engine();
+	}
+
+	static  class Engine {
+		private Long hp = 220L;
+		public String name = "V6" ;
+	}
+
+
+	public static void main(String[] args){
+		TesteReflectField.Car c = new TesteReflectField.Car();
+		
+		Object obj = org.opensutils.reflect.ReflectField.getValue( c ,"engine.hp", null);
+		
+		System.out.println(obj.equals(220L));// ira imprimir true no console
+
+		obj = org.opensutils.reflect.ReflectField.getValue( c ,"model", null);
+		System.out.println(obj); // imprimira 'ford' no console
+
+	}
+}
+}}}
+
+</li>
+<li>
+===setValue===
+_public static boolean setValue(Object parentField, String fieldName, Object value)_
+_public static boolean setValue(Object parentField, java.lang.reflect.Field field, Object value)_
+
+Este metodo permite setar um valor de um campo (Field), seja ele private, public, protected, default, o acesso ao campo é modificado por um momento caso o mesmo não for 'public', para setar o valor do campo.
+{{{
+public class TesteSetReflectField{
+
+	static class Car{
+		private String model = "ford";
+		private int number = 222 ;
+		public Engine engine = new Engine();
+	}
+
+	static  class Engine {
+		private Long hp = 220L;
+		public String name = "V6" ;
+	}
+
+
+	public static void main(String[] args){
+		TesteSetReflectField.Car c = new TesteSetReflectField.Car();
+
+		org.opensutils.reflect.ReflectField.setValue( c ,"model", "ranger");//setando o valor do atributo 'model' de "ford" para "ranger"
+
+org.opensutils.reflect.ReflectField.setValue( c ,"engine.hp", 240L);//setando o valor do atributo 'hp' da classe Engine de 220 para 240.
+
+
+	}
+}
+}}}
+</li>
+
+
+</ul>
